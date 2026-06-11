@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#162d58" />
     <title>海洋漂流瓶</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=20260611-sound2" />
   </head>
   <body>
     <div class="app-shell" data-view="home">
@@ -43,6 +43,11 @@
           <span aria-hidden="true">≋</span>
         </button>
       </header>
+
+      <button class="ambient-toggle" type="button" id="soundToggle" aria-pressed="false" aria-label="播放海浪白噪音">
+        <span class="ambient-icon" aria-hidden="true">∿</span>
+        <span class="ambient-label">海浪声</span>
+      </button>
 
       <main class="screen-stack">
         <section class="screen screen-home is-active" id="homeScreen" aria-labelledby="homeTitle">
@@ -116,6 +121,6 @@
       <div class="toast" id="toast" role="status" aria-live="polite"></div>
     </div>
 
-    <script src="./app.js"></script>
+    <script src="./app.js?v=20260611-sound2"></script>
   </body>
 </html>
