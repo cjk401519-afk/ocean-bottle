@@ -101,18 +101,48 @@ function renderTide() {
   tideList.innerHTML = bottles
     .map((bottle) => {
       const content = escapeHtml(bottle.content);
+      const id = escapeHtml(bottle.id);
       const mood = escapeHtml(bottle.mood || "未命名潮汐");
       return `
         <article class="tide-card">
           <div class="tide-card-head">
             <span>${formatDate(bottle.createdAt)}</span>
-            <span class="tide-mood">${mood}</span>
+            <div class="tide-card-tools">
+              <span class="tide-mood">${mood}</span>
+              <button class="delete-bottle" type="button" data-delete-id="${id}" aria-label="删除这只瓶子" title="删除这只瓶子">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
           </div>
           <p class="tide-content">${content}</p>
         </article>
       `;
     })
     .join("");
+}
+
+function deleteBottle(id) {
+  const bottles = readBottles();
+  const nextBottles = bottles.filter((bottle) => bottle.id !== id);
+
+  if (nextBottles.length === bottles.length) {
+    showToast("这只瓶子已经不在潮汐里了。");
+    renderTide();
+    return;
+  }
+
+  const confirmed = window.confirm("确定删除这只漂流瓶吗？这个操作不能恢复。");
+  if (!confirmed) {
+    return;
+  }
+
+  const saved = saveBottles(nextBottles);
+  if (saved) {
+    renderTide();
+    showToast("这只瓶子已经交还给海。");
+  } else {
+    showToast("这台设备暂时无法删除这只瓶子。");
+  }
 }
 
 function updateTextState() {
@@ -191,6 +221,12 @@ function sendCurrentBottle() {
 }
 
 document.addEventListener("click", (event) => {
+  const deleteButton = event.target.closest("[data-delete-id]");
+  if (deleteButton) {
+    deleteBottle(deleteButton.dataset.deleteId);
+    return;
+  }
+
   const actionButton = event.target.closest("[data-action]");
   if (actionButton) {
     switchView(actionButton.dataset.action);
