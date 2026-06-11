@@ -752,15 +752,52 @@ h2 {
 .tide-card-head {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 0.8rem;
   margin-bottom: 0.48rem;
   color: rgba(255, 234, 212, 0.7);
   font-size: 0.78rem;
 }
 
+.tide-card-tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 0 0 auto;
+}
+
 .tide-mood {
   flex: 0 0 auto;
   color: var(--warm);
+}
+
+.delete-bottle {
+  display: inline-grid;
+  place-items: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  border: 1px solid rgba(255, 236, 207, 0.16);
+  border-radius: 999px;
+  color: rgba(255, 231, 211, 0.72);
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.delete-bottle span {
+  display: block;
+  font-size: 1.15rem;
+  line-height: 1;
+  transform: translateY(-0.04rem);
+}
+
+.delete-bottle:active {
+  transform: scale(0.94);
+}
+
+.delete-bottle:hover {
+  color: #ffe6d4;
+  background: rgba(255, 178, 130, 0.14);
 }
 
 .tide-content {
