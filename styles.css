@@ -456,6 +456,55 @@ button {
   visibility: visible;
 }
 
+.ambient-toggle {
+  position: fixed;
+  left: max(1rem, calc((100vw - 30rem) / 2 + 1rem));
+  top: calc(env(safe-area-inset-top) + 3.95rem);
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  min-height: 2.35rem;
+  padding: 0 0.72rem 0 0.62rem;
+  border: 1px solid rgba(255, 236, 207, 0.18);
+  border-radius: 999px;
+  color: rgba(255, 247, 233, 0.78);
+  background: rgba(12, 24, 52, 0.26);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 0.7rem 1.6rem rgba(7, 13, 31, 0.16);
+  cursor: pointer;
+  transition: color 180ms ease, background 180ms ease, border-color 180ms ease, transform 160ms ease;
+}
+
+.ambient-toggle:active {
+  transform: scale(0.97);
+}
+
+.ambient-toggle.is-playing {
+  color: #fff2de;
+  border-color: rgba(255, 221, 178, 0.34);
+  background: rgba(255, 244, 224, 0.13);
+}
+
+.ambient-icon {
+  display: grid;
+  place-items: center;
+  width: 1.2rem;
+  height: 1.2rem;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.ambient-toggle.is-playing .ambient-icon {
+  animation: soundPulse 2.4s ease-in-out infinite;
+}
+
+.ambient-label {
+  font-size: 0.78rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
 .screen-stack {
   position: relative;
   min-height: 100vh;
@@ -932,6 +981,18 @@ h2 {
   }
 }
 
+@keyframes soundPulse {
+  0%,
+  100% {
+    opacity: 0.72;
+    transform: translateY(0) scaleX(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-0.03rem) scaleX(1.08);
+  }
+}
+
 @keyframes bottleSend {
   0% {
     opacity: 0;
@@ -952,6 +1013,10 @@ h2 {
 @media (max-height: 720px) {
   .screen {
     padding-top: calc(env(safe-area-inset-top) + 4.6rem);
+  }
+
+  .ambient-toggle {
+    top: calc(env(safe-area-inset-top) + 3.45rem);
   }
 
   .screen-compose {
