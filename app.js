@@ -15,10 +15,13 @@ const clearBottles = document.getElementById("clearBottles");
 const safetyMessage = document.getElementById("safetyMessage");
 const errorMessage = document.getElementById("errorMessage");
 const floatingBottle = document.getElementById("floatingBottle");
+const soundToggle = document.getElementById("soundToggle");
 const toast = document.getElementById("toast");
 
 let selectedMood = "疲惫";
 let toastTimer = null;
+let oceanAudio = null;
+let oceanSoundStarting = false;
 
 const dangerPatterns = [
   /自杀/,
@@ -47,6 +50,182 @@ function saveBottles(bottles) {
     return true;
   } catch (error) {
     return false;
+  }
+}
+
+function createOceanNoiseBuffer(context) {
+  const seconds = 3;
+  const buffer = context.createBuffer(1, context.sampleRate * seconds, context.sampleRate);
+  const data = buffer.getChannelData(0);
+  let softWave = 0;
+
+  for (let i = 0; i < data.length; i += 1) {
+    const white = Math.random() * 2 - 1;
+    softWave = softWave * 0.985 + white * 0.16;
+    data[i] = Math.max(-1, Math.min(1, softWave * 1.35 + white * 0.08));
+  }
+
+  return buffer;
+}
+
+function createOceanAudio() {
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextClass) {
+    return null;
+  }
+
+  const context = new AudioContextClass();
+  const source = context.createBufferSource();
+  const lowPass = context.createBiquadFilter();
+  const highPass = context.createBiquadFilter();
+  const swellGain = context.createGain();
+  const foamFilter = context.createBiquadFilter();
+  const foamGain = context.createGain();
+  const masterGain = context.createGain();
+  const swellLfo = context.createOscillator();
+  const swellDepth = context.createGain();
+  const filterLfo = context.createOscillator();
+  const filterDepth = context.createGain();
+
+  source.buffer = createOceanNoiseBuffer(context);
+  source.loop = true;
+
+  lowPass.type = "lowpass";
+  lowPass.frequency.value = 760;
+  lowPass.Q.value = 0.72;
+
+  highPass.type = "highpass";
+  highPass.frequency.value = 70;
+
+  swellGain.gain.value = 0.11;
+
+  foamFilter.type = "highpass";
+  foamFilter.frequency.value = 1300;
+  foamGain.gain.value = 0.018;
+
+  masterGain.gain.value = 0;
+
+  swellLfo.frequency.value = 0.075;
+  swellDepth.gain.value = 0.052;
+
+  filterLfo.frequency.value = 0.045;
+  filterDepth.gain.value = 220;
+
+  source.connect(lowPass);
+  lowPass.connect(highPass);
+  highPass.connect(swellGain);
+  swellGain.connect(masterGain);
+
+  source.connect(foamFilter);
+  foamFilter.connect(foamGain);
+  foamGain.connect(masterGain);
+
+  swellLfo.connect(swellDepth);
+  swellDepth.connect(swellGain.gain);
+
+  filterLfo.connect(filterDepth);
+  filterDepth.connect(lowPass.frequency);
+
+  masterGain.connect(context.destination);
+
+  source.start();
+  swellLfo.start();
+  filterLfo.start();
+
+  return {
+    context,
+    source,
+    swellLfo,
+    filterLfo,
+    masterGain,
+  };
+}
+
+function updateSoundToggle(isPlaying) {
+  if (!soundToggle) {
+    return;
+  }
+
+  soundToggle.classList.toggle("is-playing", isPlaying);
+  soundToggle.setAttribute("aria-pressed", String(isPlaying));
+  soundToggle.setAttribute("aria-label", isPlaying ? "暂停海浪白噪音" : "播放海浪白噪音");
+}
+
+function startOceanSound() {
+  if (oceanAudio || oceanSoundStarting) {
+    return;
+  }
+
+  oceanSoundStarting = true;
+  const audio = createOceanAudio();
+  if (!audio) {
+    oceanSoundStarting = false;
+    showToast("这台设备暂时不能播放海浪声。");
+    return;
+  }
+
+  oceanAudio = audio;
+  oceanSoundStarting = false;
+
+  const now = oceanAudio.context.currentTime;
+  oceanAudio.masterGain.gain.cancelScheduledValues(now);
+  oceanAudio.masterGain.gain.setValueAtTime(0, now);
+  oceanAudio.masterGain.gain.linearRampToValueAtTime(0.82, now + 1.2);
+  updateSoundToggle(true);
+  showToast("海浪声轻轻响起来了。");
+
+  if (oceanAudio.context.state === "suspended") {
+    oceanAudio.context.resume().catch(() => {
+      stopOceanSound({ silent: true });
+      showToast("这台设备暂时不能播放海浪声。");
+    });
+  }
+}
+
+function stopOceanSound(options = {}) {
+  if (!oceanAudio) {
+    oceanSoundStarting = false;
+    return;
+  }
+
+  const audio = oceanAudio;
+  oceanAudio = null;
+  oceanSoundStarting = false;
+  const now = audio.context.currentTime;
+  audio.masterGain.gain.cancelScheduledValues(now);
+  audio.masterGain.gain.setTargetAtTime(0, now, 0.08);
+
+  [audio.source, audio.swellLfo, audio.filterLfo].forEach((node) => {
+    try {
+      node.stop(now + 0.38);
+    } catch (error) {
+      // Some browsers may already stop audio nodes during page unload.
+    }
+  });
+
+  window.setTimeout(() => {
+    audio.context.close().catch(() => {});
+  }, 520);
+
+  updateSoundToggle(false);
+  if (!options.silent) {
+    showToast("海浪声停下来了。");
+  }
+}
+
+function toggleOceanSound() {
+  if (oceanAudio || oceanSoundStarting) {
+    stopOceanSound();
+    return;
+  }
+
+  try {
+    startOceanSound();
+  } catch (error) {
+    oceanAudio = null;
+    oceanSoundStarting = false;
+    updateSoundToggle(false);
+    showToast("这台设备暂时不能播放海浪声。");
   }
 }
 
@@ -297,6 +476,10 @@ document.addEventListener("click", (event) => {
 
 messageInput.addEventListener("input", updateTextState);
 sendBottle.addEventListener("click", sendCurrentBottle);
+if (soundToggle) {
+  soundToggle.addEventListener("click", toggleOceanSound);
+}
+window.addEventListener("pagehide", () => stopOceanSound({ silent: true }));
 
 clearBottles.addEventListener("click", () => {
   const bottles = readBottles();
@@ -320,5 +503,6 @@ clearBottles.addEventListener("click", () => {
 });
 
 ensureDeleteButtonStyles();
+updateSoundToggle(false);
 renderTide();
 updateTextState();
