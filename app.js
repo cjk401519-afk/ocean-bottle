@@ -50,6 +50,57 @@ function saveBottles(bottles) {
   }
 }
 
+function ensureDeleteButtonStyles() {
+  if (document.getElementById("deleteBottleStyles")) {
+    return;
+  }
+
+  const style = document.createElement("style");
+  style.id = "deleteBottleStyles";
+  style.textContent = `
+    .tide-card-head {
+      align-items: center;
+    }
+
+    .tide-card-tools {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex: 0 0 auto;
+    }
+
+    .delete-bottle {
+      display: inline-grid;
+      place-items: center;
+      width: 1.8rem;
+      height: 1.8rem;
+      border: 1px solid rgba(255, 236, 207, 0.16);
+      border-radius: 999px;
+      color: rgba(255, 231, 211, 0.72);
+      background: rgba(255, 255, 255, 0.06);
+      cursor: pointer;
+      transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+    }
+
+    .delete-bottle span {
+      display: block;
+      font-size: 1.15rem;
+      line-height: 1;
+      transform: translateY(-0.04rem);
+    }
+
+    .delete-bottle:active {
+      transform: scale(0.94);
+    }
+
+    .delete-bottle:hover {
+      color: #ffe6d4;
+      background: rgba(255, 178, 130, 0.14);
+    }
+  `;
+  document.head.append(style);
+}
+
 function switchView(view) {
   Object.entries(screens).forEach(([name, screen]) => {
     screen.classList.toggle("is-active", name === view);
@@ -268,5 +319,6 @@ clearBottles.addEventListener("click", () => {
   }
 });
 
+ensureDeleteButtonStyles();
 renderTide();
 updateTextState();
