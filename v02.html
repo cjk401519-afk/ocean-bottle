@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#162d58" />
+    <title>海洋漂流瓶</title>
+    <link rel="stylesheet" href="./styles-pick1.css" />
+  </head>
+  <body>
+    <div class="app-shell" data-view="home">
+      <div class="ocean-scene" aria-hidden="true">
+        <div class="sky-glow"></div>
+        <div class="sunset"></div>
+        <div class="haze haze-one"></div>
+        <div class="haze haze-two"></div>
+        <div class="distant-coast"></div>
+        <div class="coast-light coast-light-one"></div>
+        <div class="coast-light coast-light-two"></div>
+        <div class="lighthouse">
+          <div class="lighthouse-beam"></div>
+          <div class="lighthouse-top"></div>
+          <div class="lighthouse-body"></div>
+        </div>
+        <div class="fishing-boat boat-one"></div>
+        <div class="fishing-boat boat-two"></div>
+        <div class="stranded-ship"></div>
+        <div class="sea">
+          <div class="wave wave-one"></div>
+          <div class="wave wave-two"></div>
+          <div class="wave wave-three"></div>
+          <div class="sparkles"></div>
+        </div>
+        <div class="floating-bottle" id="floatingBottle"></div>
+      </div>
+
+      <header class="app-topbar">
+        <button class="icon-button back-button" type="button" data-action="home" aria-label="回到海面">
+          <span aria-hidden="true">‹</span>
+        </button>
+        <p class="topbar-title">海洋漂流瓶</p>
+        <button class="icon-button tide-shortcut" type="button" data-action="tide" aria-label="打开情绪潮汐">
+          <span aria-hidden="true">≋</span>
+        </button>
+      </header>
+
+      <button class="ambient-toggle" type="button" id="soundToggle" aria-pressed="false" aria-label="播放海浪白噪音">
+        <span class="ambient-icon" aria-hidden="true">∿</span>
+        <span class="ambient-label">海浪声</span>
+      </button>
+
+      <main class="screen-stack">
+        <section class="screen screen-home is-active" id="homeScreen" aria-labelledby="homeTitle">
+          <div class="home-copy">
+            <p class="eyebrow">威海黄昏海岸</p>
+            <h1 id="homeTitle">海洋漂流瓶</h1>
+            <p class="home-line">灯塔无言，光却替他说尽了守望。</p>
+            <p class="home-note">说不出口的话，可以先交给今晚的海。</p>
+          </div>
+
+          <div class="home-actions">
+            <button class="primary-button" type="button" data-action="compose">写给海的话</button>
+            <button class="ghost-button" type="button" data-action="pick">捡一只漂流瓶</button>
+            <button class="ghost-button" type="button" data-action="tide">看看情绪潮汐</button>
+            <p class="privacy-note">这一版只保存在你的设备里，不登录，也不会上传。</p>
+          </div>
+        </section>
+
+        <section class="screen screen-compose" id="composeScreen" aria-labelledby="composeTitle">
+          <div class="compose-panel">
+            <p class="eyebrow">把这一刻放进瓶子</p>
+            <h2 id="composeTitle">写给海的话</h2>
+            <p class="supporting-copy">不用解释清楚，也不用马上好起来。写下就好。</p>
+
+            <div class="mood-group" role="radiogroup" aria-label="选择此刻的心情">
+              <button class="mood-chip is-selected" type="button" role="radio" aria-checked="true" data-mood="疲惫">疲惫</button>
+              <button class="mood-chip" type="button" role="radio" aria-checked="false" data-mood="想念">想念</button>
+              <button class="mood-chip" type="button" role="radio" aria-checked="false" data-mood="迷茫">迷茫</button>
+              <button class="mood-chip" type="button" role="radio" aria-checked="false" data-mood="委屈">委屈</button>
+              <button class="mood-chip" type="button" role="radio" aria-checked="false" data-mood="平静">平静</button>
+            </div>
+
+            <label class="message-label" for="messageInput">你的漂流瓶</label>
+            <textarea
+              id="messageInput"
+              class="message-input"
+              maxlength="900"
+              placeholder="今天想对大海说些什么？"
+            ></textarea>
+
+            <div class="compose-meta">
+              <span id="charCount">0 / 900</span>
+              <span>本地保存</span>
+            </div>
+
+            <div class="safety-message" id="safetyMessage" aria-live="polite">
+              如果今晚很难撑住，请先联系身边可信任的人，或拨打当地紧急电话。你也可以暂时把这句话留在这里，海会陪你一会儿。
+            </div>
+
+            <p class="error-message" id="errorMessage" aria-live="polite"></p>
+
+            <button class="primary-button send-button" type="button" id="sendBottle">交给海</button>
+          </div>
+        </section>
+
+        <section class="screen screen-pick" id="pickScreen" aria-labelledby="pickTitle">
+          <div class="pick-header">
+            <p class="eyebrow">海送来一只瓶子</p>
+            <h2 id="pickTitle">捡一只漂流瓶</h2>
+            <p class="supporting-copy">这一版是预设来信，不来自真实用户。先把一束温柔递给远方。</p>
+          </div>
+
+          <article class="found-bottle" id="foundBottle" aria-live="polite"></article>
+
+          <div class="reply-panel" aria-label="选择一句温柔回应">
+            <p class="reply-label">给它一点回应</p>
+            <button class="reply-chip" type="button" data-reply="愿你今晚睡得安稳一点">愿你今晚睡得安稳一点</button>
+            <button class="reply-chip" type="button" data-reply="这束光也为你亮着">这束光也为你亮着</button>
+            <button class="reply-chip" type="button" data-reply="你不用一个人撑完所有">你不用一个人撑完所有</button>
+          </div>
+
+          <p class="reply-result" id="replyResult" aria-live="polite"></p>
+
+          <div class="pick-footer">
+            <button class="ghost-button" type="button" id="pickAnother">换一只瓶子</button>
+            <button class="quiet-button" type="button" data-action="compose">也写给海</button>
+          </div>
+        </section>
+
+        <section class="screen screen-tide" id="tideScreen" aria-labelledby="tideTitle">
+          <div class="tide-header">
+            <p class="eyebrow">只属于你的海</p>
+            <h2 id="tideTitle">情绪潮汐</h2>
+            <p class="supporting-copy">潮水会来，也会退。这里留着你曾经交给海的话。</p>
+          </div>
+
+          <div class="tide-list" id="tideList" aria-live="polite"></div>
+
+          <div class="tide-footer">
+            <button class="ghost-button" type="button" data-action="compose">再写一只瓶子</button>
+            <button class="quiet-button" type="button" id="clearBottles">清空本机记录</button>
+          </div>
+        </section>
+      </main>
+
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </div>
+
+    <script src="./app.js?v=20260612-pick1"></script>
+  </body>
+</html>
