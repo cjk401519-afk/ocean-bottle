@@ -4,6 +4,7 @@ const appShell = document.querySelector(".app-shell");
 const screens = {
   home: document.getElementById("homeScreen"),
   compose: document.getElementById("composeScreen"),
+  pick: document.getElementById("pickScreen"),
   tide: document.getElementById("tideScreen"),
 };
 
@@ -12,6 +13,9 @@ const charCount = document.getElementById("charCount");
 const sendBottle = document.getElementById("sendBottle");
 const tideList = document.getElementById("tideList");
 const clearBottles = document.getElementById("clearBottles");
+const foundBottle = document.getElementById("foundBottle");
+const pickAnother = document.getElementById("pickAnother");
+const replyResult = document.getElementById("replyResult");
 const safetyMessage = document.getElementById("safetyMessage");
 const errorMessage = document.getElementById("errorMessage");
 const floatingBottle = document.getElementById("floatingBottle");
@@ -22,6 +26,7 @@ let selectedMood = "疲惫";
 let toastTimer = null;
 let oceanAudio = null;
 let oceanSoundStarting = false;
+let currentFoundBottleId = null;
 
 const dangerPatterns = [
   /自杀/,
@@ -32,6 +37,45 @@ const dangerPatterns = [
   /活不下去/,
   /撑不下去/,
   /轻生/,
+];
+
+const presetBottles = [
+  {
+    id: "harbor-light",
+    place: "黄昏港口",
+    mood: "疲惫",
+    content: "今天没有发生特别糟糕的事，可我还是觉得很累。像在岸边站了很久，风一直吹，却不知道该往哪里走。",
+  },
+  {
+    id: "late-train",
+    place: "末班车窗",
+    mood: "想念",
+    content: "我突然很想念一个已经很久没联系的人。不是想回到过去，只是想知道，那些没说完的话是不是也会被海记得。",
+  },
+  {
+    id: "small-room",
+    place: "一盏小灯旁",
+    mood: "委屈",
+    content: "我好像总是在别人面前说没关系。可其实有些话咽下去以后，会在晚上变得很重。",
+  },
+  {
+    id: "foggy-road",
+    place: "雾气很轻的路口",
+    mood: "迷茫",
+    content: "我不知道现在做的选择对不对。只是希望多年以后回头看，会觉得那时的自己已经很努力了。",
+  },
+  {
+    id: "quiet-roof",
+    place: "安静屋顶",
+    mood: "平静",
+    content: "今晚风很慢。我没有变得特别好，但也没有继续往下沉。这样也算一点点靠岸吧。",
+  },
+  {
+    id: "winter-sea",
+    place: "冬天的海边",
+    mood: "疲惫",
+    content: "我把今天撑过去了。虽然只是普通的一天，但我想有人能替我说一句：已经很好了。",
+  },
 ];
 
 function readBottles() {
@@ -287,6 +331,10 @@ function switchView(view) {
 
   appShell.dataset.view = view;
 
+  if (view === "pick") {
+    pickBottle();
+  }
+
   if (view === "tide") {
     renderTide();
   }
@@ -333,7 +381,7 @@ function renderTide() {
       const content = escapeHtml(bottle.content);
       const id = escapeHtml(bottle.id);
       const mood = escapeHtml(bottle.mood || "未命名潮汐");
-      return `
+    return `
         <article class="tide-card">
           <div class="tide-card-head">
             <span>${formatDate(bottle.createdAt)}</span>
@@ -349,6 +397,62 @@ function renderTide() {
       `;
     })
     .join("");
+}
+
+function renderFoundBottle(bottle) {
+  if (!foundBottle || !bottle) {
+    return;
+  }
+
+  foundBottle.classList.remove("is-lit");
+  void foundBottle.offsetWidth;
+
+  foundBottle.innerHTML = `
+    <div class="found-bottle-top">
+      <span>${escapeHtml(bottle.place)}</span>
+      <span class="tide-mood">${escapeHtml(bottle.mood)}</span>
+    </div>
+    <p class="found-bottle-text">${escapeHtml(bottle.content)}</p>
+  `;
+}
+
+function pickBottle() {
+  if (!foundBottle) {
+    return;
+  }
+
+  const candidates = presetBottles.filter((bottle) => bottle.id !== currentFoundBottleId);
+  const bottlePool = candidates.length ? candidates : presetBottles;
+  const nextBottle = bottlePool[Math.floor(Math.random() * bottlePool.length)];
+  currentFoundBottleId = nextBottle.id;
+
+  if (replyResult) {
+    replyResult.textContent = "";
+    replyResult.classList.remove("is-visible");
+  }
+  appShell.classList.remove("is-blessing");
+  renderFoundBottle(nextBottle);
+}
+
+function sendWarmReply(message) {
+  if (!message || !foundBottle) {
+    return;
+  }
+
+  foundBottle.classList.add("is-lit");
+  appShell.classList.remove("is-blessing");
+  void appShell.offsetWidth;
+  appShell.classList.add("is-blessing");
+
+  if (replyResult) {
+    replyResult.textContent = `“${message}” 已经被灯塔的光送向远方。`;
+    replyResult.classList.add("is-visible");
+  }
+  showToast("你的回应被海风带走了。");
+
+  window.setTimeout(() => {
+    appShell.classList.remove("is-blessing");
+  }, 2200);
 }
 
 function deleteBottle(id) {
@@ -463,6 +567,12 @@ document.addEventListener("click", (event) => {
     return;
   }
 
+  const replyButton = event.target.closest("[data-reply]");
+  if (replyButton) {
+    sendWarmReply(replyButton.dataset.reply);
+    return;
+  }
+
   const moodChip = event.target.closest(".mood-chip");
   if (moodChip) {
     selectedMood = moodChip.dataset.mood;
@@ -478,6 +588,9 @@ messageInput.addEventListener("input", updateTextState);
 sendBottle.addEventListener("click", sendCurrentBottle);
 if (soundToggle) {
   soundToggle.addEventListener("click", toggleOceanSound);
+}
+if (pickAnother) {
+  pickAnother.addEventListener("click", pickBottle);
 }
 window.addEventListener("pagehide", () => stopOceanSound({ silent: true }));
 
