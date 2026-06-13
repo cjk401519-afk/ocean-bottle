@@ -19,10 +19,20 @@
 - 选择轻量心情标签
 - 投出漂流瓶动画
 - 情绪潮汐本地回望
-- 海浪白噪音开关
+- 真实海浪白噪音开关
 - `localStorage` 本地保存
 - 空内容拦截
 - 强烈危险信号的温柔提示
+
+## 声音素材
+
+- 海浪声：Small Waves Back to the Ocean
+- 来源：BigSoundBank / LaSonotheque
+- 作者：Joseph SARDIN
+- 许可：CC0 公共领域，可用于个人、商业、网页和 App 项目
+- 链接：https://bigsoundbank.com/petites-vagues-dos-ocean-s1047.html
+- 当前网页播放：BigSoundBank 官方 MP3 地址
+- 本地备份：`assets/ocean-waves-cc0.mp3`
 
 ## 产品语气
 
