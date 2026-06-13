@@ -184,7 +184,7 @@ async function startOceanSound() {
     oceanSoundStarting = false;
     fadeOceanVolume(audio, 0.82, 1200);
     updateSoundToggle(true);
-    showToast("海浪声轟轟响起来了。");
+    showToast("海浪声轻轻响起来了。");
   } catch (error) {
     window.__oceanAudioLastError = {
       name: error && error.name ? error.name : "AudioError",
