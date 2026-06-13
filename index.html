@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#162d58" />
     <title>海洋漂流瓶</title>
-    <link rel="stylesheet" href="./styles-pick2.css?v=tide-detail-1" />
+    <link rel="stylesheet" href="./styles-pick2.css?v=echo-3" />
   </head>
   <body>
     <div class="app-shell" data-view="home">
@@ -107,22 +107,23 @@
           <div class="pick-header">
             <p class="eyebrow">海送来一只瓶子</p>
             <h2 id="pickTitle">捡一只漂流瓶</h2>
-            <p class="supporting-copy">这一版是预设来信，不来自真实用户。先把一束温柔递给远方。</p>
+            <p class="supporting-copy">这一版仍是预设来信，不来自真实用户。等瓶子靠近，再把一束光送回远方。</p>
           </div>
 
           <article class="found-bottle" id="foundBottle" aria-live="polite"></article>
 
           <div class="reply-panel" aria-label="选择一句温柔回应">
-            <p class="reply-label">给它一点回应</p>
-            <button class="reply-chip" type="button" data-reply="愿你今晚睡得安稳一点">愿你今晚睡得安稳一点</button>
-            <button class="reply-chip" type="button" data-reply="这束光也为你亮着">这束光也为你亮着</button>
-            <button class="reply-chip" type="button" data-reply="你不用一个人撑完所有">你不用一个人撑完所有</button>
+            <p class="reply-label">给远方一点回应</p>
+            <button class="reply-chip" type="button" data-reply="愿你今晚安稳一点">愿你今晚安稳一点</button>
+            <button class="reply-chip" type="button" data-reply="我把这束光还给你">我把这束光还给你</button>
+            <button class="reply-chip" type="button" data-reply="我也曾这样，但后来走出来了一点">我也曾这样，但后来走出来了一点</button>
           </div>
 
           <p class="reply-result" id="replyResult" aria-live="polite"></p>
 
           <div class="pick-footer">
             <button class="ghost-button" type="button" id="pickAnother">换一只瓶子</button>
+            <button class="quiet-button save-found-light" type="button" id="saveFoundLight" disabled>收藏这束光</button>
             <button class="quiet-button" type="button" data-action="compose">也写给海</button>
           </div>
         </section>
@@ -181,7 +182,7 @@
       <div class="toast" id="toast" role="status" aria-live="polite"></div>
     </div>
 
-    <script src="./app-audio5.js"></script>
-    <script src="./tide-detail.js?v=tide-detail-2"></script>
+    <script src="./app-audio5.js?v=echo-3"></script>
+    <script src="./tide-detail.js?v=echo-3"></script>
   </body>
 </html>
