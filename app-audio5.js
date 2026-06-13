@@ -15,6 +15,7 @@ const tideList = document.getElementById("tideList");
 const clearBottles = document.getElementById("clearBottles");
 const foundBottle = document.getElementById("foundBottle");
 const pickAnother = document.getElementById("pickAnother");
+const saveFoundLight = document.getElementById("saveFoundLight");
 const replyResult = document.getElementById("replyResult");
 const safetyMessage = document.getElementById("safetyMessage");
 const errorMessage = document.getElementById("errorMessage");
@@ -30,6 +31,9 @@ let oceanAudio = null;
 let oceanSoundStarting = false;
 let oceanFadeFrame = null;
 let currentFoundBottleId = null;
+let currentFoundBottle = null;
+let foundBottleOpened = false;
+let pickArrivalTimer = null;
 
 const dangerPatterns = [
   /自杀/,
@@ -47,37 +51,37 @@ const presetBottles = [
     id: "harbor-light",
     place: "黄昏港口",
     mood: "疲惫",
-    content: "今天没有发生特别糟糕的事，可我还是觉得很累。像在岸边站了很久，风一直吹，却不知道该往哪里走。",
+    content: "你不用今天就想明白所有事。海雾散得慢，人也可以慢一点。",
   },
   {
     id: "late-train",
     place: "末班车窗",
     mood: "想念",
-    content: "我突然很想念一个已经很久没联系的人。不是想回到过去，只是想知道，那些没说完的话是不是也会被海记得。",
+    content: "有些想念不会立刻靠岸。它只是经过你，提醒你曾经认真爱过。",
   },
   {
     id: "small-room",
     place: "一盏小灯旁",
     mood: "委屈",
-    content: "我好像总是在别人面前说没关系。可其实有些话咽下去以后，会在晚上变得很重。",
+    content: "今晚先别责怪自己。能把这一天走到这里，已经很不容易。",
   },
   {
     id: "foggy-road",
     place: "雾气很轻的路口",
     mood: "迷茫",
-    content: "我不知道现在做的选择对不对。只是希望多年以后回头看，会觉得那时的自己已经很努力了。",
+    content: "有些难过只是暂时没有岸。等天亮一点，再把脚下的路看清。",
   },
   {
     id: "quiet-roof",
     place: "安静屋顶",
     mood: "平静",
-    content: "今晚风很慢。我没有变得特别好，但也没有继续往下沉。这样也算一点点靠岸吧。",
+    content: "你可以不立刻变好。先让风从身边经过，明天再向前一点。",
   },
   {
     id: "winter-sea",
     place: "冬天的海边",
     mood: "疲惫",
-    content: "我把今天撑过去了。虽然只是普通的一天，但我想有人能替我说一句：已经很好了。",
+    content: "如果没人听见你的沉默，也许这盏灯正在替你守一会儿。",
   },
 ];
 
@@ -98,6 +102,12 @@ function saveBottles(bottles) {
   } catch (error) {
     return false;
   }
+}
+
+function createBottleId() {
+  return globalThis.crypto && typeof globalThis.crypto.randomUUID === "function"
+    ? globalThis.crypto.randomUUID()
+    : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 }
 
 function createOceanAudio() {
@@ -174,7 +184,7 @@ async function startOceanSound() {
     oceanSoundStarting = false;
     fadeOceanVolume(audio, 0.82, 1200);
     updateSoundToggle(true);
-    showToast("海浪声轻轻响起来了。");
+    showToast("海浪声轟轟响起来了。");
   } catch (error) {
     window.__oceanAudioLastError = {
       name: error && error.name ? error.name : "AudioError",
@@ -382,13 +392,64 @@ function renderTide() {
     .join("");
 }
 
+function hasSavedFoundLight(bottleId) {
+  if (!bottleId) {
+    return false;
+  }
+
+  return readBottles().some((bottle) => bottle.status === "found_light" && bottle.sourceId === bottleId);
+}
+
+function updateFoundLightButton() {
+  if (!saveFoundLight) {
+    return;
+  }
+
+  if (!currentFoundBottle || !foundBottleOpened) {
+    saveFoundLight.disabled = true;
+    saveFoundLight.textContent = "收藏这束光";
+    return;
+  }
+
+  const isSaved = hasSavedFoundLight(currentFoundBottle.id);
+  saveFoundLight.disabled = isSaved;
+  saveFoundLight.textContent = isSaved ? "已收藏到潮汐" : "收藏这束光";
+}
+
+function resetReplyState() {
+  document.querySelectorAll(".reply-chip").forEach((chip) => {
+    chip.classList.remove("is-selected");
+  });
+
+  if (replyResult) {
+    replyResult.textContent = "";
+    replyResult.classList.remove("is-visible");
+    replyResult.style.opacity = "0";
+    replyResult.style.transform = "translateY(0.35rem)";
+  }
+}
+
 function renderFoundBottle(bottle) {
   if (!foundBottle || !bottle) {
     return;
   }
 
-  foundBottle.classList.remove("is-lit");
+  foundBottle.classList.remove("is-lit", "is-open", "is-arriving");
+  foundBottle.classList.toggle("is-open", foundBottleOpened);
+  foundBottle.classList.toggle("is-arriving", !foundBottleOpened);
   void foundBottle.offsetWidth;
+
+  if (!foundBottleOpened) {
+    foundBottle.innerHTML = `
+      <button class="found-bottle-shell" type="button" data-open-found aria-label="打开这只漂流瓶">
+        <span class="found-bottle-wave" aria-hidden="true"></span>
+        <span class="found-bottle-visual" aria-hidden="true"></span>
+        <span class="found-bottle-status">一只瓶子正慢慢靠近</span>
+        <span class="found-bottle-hint">轻点打开</span>
+      </button>
+    `;
+    return;
+  }
 
   foundBottle.innerHTML = `
     <div class="found-bottle-top">
@@ -396,6 +457,7 @@ function renderFoundBottle(bottle) {
       <span class="tide-mood">${escapeHtml(bottle.mood)}</span>
     </div>
     <p class="found-bottle-text">${escapeHtml(bottle.content)}</p>
+    <p class="found-bottle-afterword">如果这句话碰到你，可以把一点光送回远方。</p>
   `;
 }
 
@@ -408,15 +470,34 @@ function pickBottle() {
   const bottlePool = candidates.length ? candidates : presetBottles;
   const nextBottle = bottlePool[Math.floor(Math.random() * bottlePool.length)];
   currentFoundBottleId = nextBottle.id;
+  currentFoundBottle = nextBottle;
+  foundBottleOpened = false;
 
-  if (replyResult) {
-    replyResult.textContent = "";
-    replyResult.classList.remove("is-visible");
-    replyResult.style.opacity = "0";
-    replyResult.style.transform = "translateY(0.35rem)";
-  }
+  window.clearTimeout(pickArrivalTimer);
+  screens.pick.dataset.pickState = "arriving";
+  pickArrivalTimer = window.setTimeout(() => {
+    if (!foundBottleOpened) {
+      screens.pick.dataset.pickState = "ready";
+    }
+  }, 820);
+
+  resetReplyState();
   appShell.classList.remove("is-blessing");
   renderFoundBottle(nextBottle);
+  updateFoundLightButton();
+}
+
+function openFoundBottle() {
+  if (!currentFoundBottle || foundBottleOpened) {
+    return;
+  }
+
+  foundBottleOpened = true;
+  window.clearTimeout(pickArrivalTimer);
+  screens.pick.dataset.pickState = "open";
+  renderFoundBottle(currentFoundBottle);
+  updateFoundLightButton();
+  showToast("瓶子里的话被海风展开了。");
 }
 
 function sendWarmReply(message) {
@@ -424,13 +505,21 @@ function sendWarmReply(message) {
     return;
   }
 
+  if (!foundBottleOpened) {
+    showToast("先轻轻打开这只瓶子。");
+    return;
+  }
+
   foundBottle.classList.add("is-lit");
   appShell.classList.remove("is-blessing");
   void appShell.offsetWidth;
   appShell.classList.add("is-blessing");
+  document.querySelectorAll(".reply-chip").forEach((chip) => {
+    chip.classList.toggle("is-selected", chip.dataset.reply === message);
+  });
 
   if (replyResult) {
-    replyResult.textContent = `“${message}” 已经被灯塔的光送向远方。`;
+    replyResult.textContent = `“${message}” 这束光已经替你送到远方。`;
     replyResult.classList.add("is-visible");
     replyResult.style.opacity = "1";
     replyResult.style.transform = "translateY(0)";
@@ -440,6 +529,39 @@ function sendWarmReply(message) {
   window.setTimeout(() => {
     appShell.classList.remove("is-blessing");
   }, 2200);
+}
+
+function saveFoundLightToTide() {
+  if (!currentFoundBottle || !foundBottleOpened) {
+    showToast("先打开这只瓶子，再收藏这束光。");
+    return;
+  }
+
+  if (hasSavedFoundLight(currentFoundBottle.id)) {
+    updateFoundLightButton();
+    showToast("这束光已经在情绪潮汐里了。");
+    return;
+  }
+
+  const bottles = readBottles();
+  const savedBottle = {
+    id: createBottleId(),
+    content: `我在海边捡到一句话：\n${currentFoundBottle.content}`,
+    mood: "拾光",
+    createdAt: new Date().toISOString(),
+    scene: currentFoundBottle.place,
+    status: "found_light",
+    sourceId: currentFoundBottle.id,
+  };
+
+  const saved = saveBottles([savedBottle, ...bottles]);
+  if (!saved) {
+    showToast("这台设备暂时没有收好这束光。");
+    return;
+  }
+
+  updateFoundLightButton();
+  showToast("这束光已经收进情绪潮汐。");
 }
 
 function deleteBottle(id) {
@@ -514,10 +636,7 @@ function sendCurrentBottle() {
 
   const bottles = readBottles();
   const bottle = {
-    id:
-      globalThis.crypto && typeof globalThis.crypto.randomUUID === "function"
-        ? globalThis.crypto.randomUUID()
-        : `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+    id: createBottleId(),
     content,
     mood: selectedMood,
     createdAt: new Date().toISOString(),
@@ -545,6 +664,12 @@ document.addEventListener("click", (event) => {
   const deleteButton = event.target.closest("[data-delete-id]");
   if (deleteButton) {
     deleteBottle(deleteButton.dataset.deleteId);
+    return;
+  }
+
+  const openFoundButton = event.target.closest("[data-open-found]");
+  if (openFoundButton) {
+    openFoundBottle();
     return;
   }
 
@@ -578,6 +703,9 @@ if (soundToggle) {
 }
 if (pickAnother) {
   pickAnother.addEventListener("click", pickBottle);
+}
+if (saveFoundLight) {
+  saveFoundLight.addEventListener("click", saveFoundLightToTide);
 }
 window.addEventListener("pagehide", () => stopOceanSound({ silent: true }));
 

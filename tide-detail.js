@@ -163,13 +163,15 @@ function renderBottleDetail(id) {
 
   currentDetailBottleId = id;
   const reply = bottle.selfReply && bottle.selfReply.content ? bottle.selfReply : null;
+  const statusLabel =
+    bottle.status === "kept_by_sea" ? "海替你保管着" : bottle.status === "found_light" ? "海边拾光" : "本地潮汐";
 
   detailDate.textContent = tideFormatDate(bottle.createdAt);
   detailScene.textContent = bottle.scene || "威海黄昏灯塔海岸";
   detailBottle.innerHTML = `
     <div class="detail-bottle-meta">
       <span class="tide-mood">${tideEscapeHtml(bottle.mood || "未命名潮汐")}</span>
-      <span>${bottle.status === "kept_by_sea" ? "海替你保管着" : "本地潮汐"}</span>
+      <span>${statusLabel}</span>
     </div>
     <p class="detail-content">${tideEscapeHtml(bottle.content)}</p>
     ${

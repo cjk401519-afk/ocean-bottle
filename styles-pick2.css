@@ -428,3 +428,210 @@
   font-size: 0.74rem;
   white-space: nowrap;
 }
+
+.screen-pick[data-pick-state="arriving"] .reply-panel,
+.screen-pick[data-pick-state="ready"] .reply-panel {
+  opacity: 0.48;
+  pointer-events: none;
+}
+
+.screen-pick[data-pick-state="arriving"] .reply-label::after,
+.screen-pick[data-pick-state="ready"] .reply-label::after {
+  content: "，先等它靠近";
+  color: rgba(255, 224, 194, 0.5);
+}
+
+.found-bottle {
+  display: grid;
+  min-height: 13.25rem;
+  padding: 1rem;
+  border-color: rgba(255, 236, 207, 0.18);
+  border-radius: 1.25rem;
+  background:
+    radial-gradient(circle at 18% 8%, rgba(255, 236, 202, 0.2), transparent 8rem),
+    radial-gradient(ellipse at 50% 106%, rgba(255, 230, 196, 0.16), transparent 8rem),
+    linear-gradient(180deg, rgba(20, 38, 76, 0.72), rgba(10, 24, 55, 0.58));
+}
+
+.found-bottle::before {
+  content: none;
+}
+
+.found-bottle::after {
+  inset: auto -12% -2.8rem -12%;
+  height: 6.2rem;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255, 241, 214, 0.2), transparent 58%),
+    repeating-linear-gradient(178deg, rgba(255, 255, 255, 0.12) 0 1px, transparent 1px 1.3rem);
+  animation: echoCurrent 6s ease-in-out infinite;
+}
+
+.found-bottle-shell {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 0.46rem;
+  min-height: 11rem;
+  width: 100%;
+  border: 0;
+  color: rgba(255, 248, 235, 0.9);
+  background: transparent;
+  cursor: pointer;
+}
+
+.found-bottle-shell:focus-visible {
+  outline: 2px solid rgba(255, 214, 169, 0.58);
+  outline-offset: 0.25rem;
+  border-radius: 1rem;
+}
+
+.found-bottle-wave {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 1.1rem;
+  height: 3.3rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 50% 42%, rgba(255, 242, 218, 0.18), transparent 66%),
+    repeating-linear-gradient(178deg, rgba(255, 255, 255, 0.14) 0 1px, transparent 1px 1.1rem);
+  filter: blur(0.5px);
+  opacity: 0.7;
+  animation: echoRipple 4.8s ease-in-out infinite;
+}
+
+.found-bottle-visual {
+  width: min(12rem, 58vw);
+  aspect-ratio: 3 / 2;
+  background: url("./assets/drift-bottle-crystal.png") center / contain no-repeat;
+  filter:
+    drop-shadow(0 0.85rem 1.1rem rgba(7, 13, 31, 0.25))
+    drop-shadow(0 0 1.1rem rgba(255, 194, 214, 0.2));
+  transform-origin: center;
+  animation: echoBottleDrift 5.2s ease-in-out infinite;
+}
+
+.found-bottle-status {
+  margin-top: 0.15rem;
+  color: rgba(255, 238, 218, 0.76);
+  font-size: 0.84rem;
+}
+
+.found-bottle-hint {
+  display: inline-grid;
+  place-items: center;
+  min-height: 1.9rem;
+  padding: 0 0.68rem;
+  border: 1px solid rgba(255, 236, 207, 0.16);
+  border-radius: 999px;
+  color: rgba(255, 230, 199, 0.76);
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 0.78rem;
+}
+
+.screen-pick[data-pick-state="ready"] .found-bottle-hint {
+  color: #fff1dc;
+  border-color: rgba(255, 217, 174, 0.34);
+  background: rgba(255, 224, 184, 0.1);
+  animation: echoHintPulse 2.2s ease-in-out infinite;
+}
+
+.found-bottle.is-open {
+  align-content: start;
+  animation: echoReveal 520ms ease both;
+}
+
+.found-bottle.is-open .found-bottle-top {
+  padding-right: 0;
+}
+
+.found-bottle.is-open .found-bottle-text {
+  margin-top: 1.15rem;
+  font-size: 1.08rem;
+  line-height: 1.86;
+}
+
+.found-bottle-afterword {
+  position: relative;
+  z-index: 1;
+  margin: 1rem 0 0;
+  color: rgba(255, 226, 197, 0.62);
+  font-size: 0.84rem;
+  line-height: 1.65;
+}
+
+.found-bottle.is-lit {
+  border-color: rgba(255, 221, 178, 0.46);
+  box-shadow:
+    0 1rem 2.2rem rgba(255, 180, 125, 0.16),
+    0 0 2.6rem rgba(255, 216, 171, 0.16);
+}
+
+.found-bottle.is-lit .found-bottle-text {
+  text-shadow: 0 0 1rem rgba(255, 215, 171, 0.2);
+}
+
+.reply-chip.is-selected {
+  color: #fff4e3;
+  border-color: rgba(255, 221, 178, 0.38);
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255, 232, 198, 0.16), transparent 6rem),
+    rgba(255, 244, 224, 0.14);
+}
+
+.save-found-light:disabled {
+  color: rgba(255, 238, 218, 0.36);
+  cursor: default;
+  opacity: 0.72;
+}
+
+.save-found-light:not(:disabled) {
+  color: rgba(255, 225, 194, 0.86);
+}
+
+@keyframes echoBottleDrift {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-4deg) scale(0.98);
+  }
+  50% {
+    transform: translateY(-0.38rem) rotate(3deg) scale(1.02);
+  }
+}
+
+@keyframes echoRipple {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: translateX(-2%) scaleX(0.96);
+  }
+  50% {
+    opacity: 0.82;
+    transform: translateX(2%) scaleX(1.04);
+  }
+}
+
+@keyframes echoHintPulse {
+  0%,
+  100% {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+  50% {
+    transform: translateY(-0.04rem);
+    box-shadow: 0 0 1rem rgba(255, 222, 181, 0.16);
+  }
+}
+
+@keyframes echoReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(0.42rem) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
