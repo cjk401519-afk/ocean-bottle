@@ -31,8 +31,8 @@
           <div class="wave wave-three"></div>
           <div class="sparkles"></div>
         </div>
-        <div class="floating-bottle" id="floatingBottle"></div>
       </div>
+      <div class="floating-bottle" id="floatingBottle"></div>
 
       <header class="app-topbar">
         <button class="icon-button back-button" type="button" data-action="home" aria-label="回到海面">
@@ -141,11 +141,47 @@
             <button class="quiet-button" type="button" id="clearBottles">清空本机记录</button>
           </div>
         </section>
+
+        <section class="screen screen-detail" id="detailScreen" aria-labelledby="detailTitle">
+          <div class="detail-panel">
+            <div class="detail-header">
+              <p class="eyebrow" id="detailDate">某一次潮汐</p>
+              <h2 id="detailTitle">那天的漂流瓶</h2>
+              <p class="supporting-copy" id="detailScene">威海黄昏灯塔海岸</p>
+            </div>
+
+            <article class="detail-bottle" id="detailBottle" aria-live="polite"></article>
+
+            <div class="self-reply-panel">
+              <label class="message-label" for="selfReplyInput">给那时的自己</label>
+              <textarea
+                id="selfReplyInput"
+                class="message-input self-reply-input"
+                maxlength="360"
+                placeholder="现在的你，想对那天的自己说些什么？"
+              ></textarea>
+
+              <div class="compose-meta">
+                <span id="selfReplyCount">0 / 360</span>
+                <span>本地保存</span>
+              </div>
+
+              <p class="error-message" id="selfReplyError" aria-live="polite"></p>
+              <button class="primary-button send-button" type="button" id="saveSelfReply">留给那时的自己</button>
+            </div>
+
+            <div class="pick-footer">
+              <button class="ghost-button" type="button" data-action="tide">回到情绪潮汐</button>
+              <button class="quiet-button" type="button" data-action="compose">再写一只瓶子</button>
+            </div>
+          </div>
+        </section>
       </main>
 
       <div class="toast" id="toast" role="status" aria-live="polite"></div>
     </div>
 
     <script src="./app-audio5.js"></script>
+    <script src="./tide-detail.js"></script>
   </body>
 </html>
