@@ -1,4 +1,4 @@
-@import url("./styles-pick1.css?v=mono-lighthouse-1");
+@import url("./styles-pick1.css?v=mist-lighthouse-2");
 
 .app-shell .screen {
   pointer-events: none;
@@ -110,4 +110,130 @@
   background: linear-gradient(90deg, rgba(255, 246, 211, 0), rgba(255, 230, 166, 0.26), rgba(255, 255, 255, 0.05));
   clip-path: polygon(0 46%, 100% 18%, 100% 82%, 0 58%);
   filter: blur(3.6px);
+}
+
+.lighthouse {
+  right: clamp(1.45rem, 7vw, 3.4rem);
+  top: 43.5%;
+  width: 3.35rem;
+  height: 10.45rem;
+  opacity: 0.9;
+  filter:
+    drop-shadow(0 1.1rem 1.7rem rgba(5, 12, 28, 0.22))
+    drop-shadow(0 0 0.55rem rgba(255, 240, 213, 0.14));
+}
+
+.lighthouse::before {
+  content: "";
+  position: absolute;
+  left: -1.2rem;
+  right: -1rem;
+  top: 0.15rem;
+  bottom: -0.3rem;
+  border-radius: 55% 45% 48% 52%;
+  background:
+    radial-gradient(ellipse at 61% 34%, rgba(255, 226, 188, 0.12), rgba(145, 160, 187, 0.1) 42%, transparent 74%),
+    linear-gradient(180deg, rgba(255, 222, 187, 0.08), transparent 58%);
+  filter: blur(0.95rem);
+  z-index: 0;
+}
+
+.lighthouse::after {
+  left: -1.22rem;
+  bottom: -0.12rem;
+  width: 5.8rem;
+  height: 1.02rem;
+  border-radius: 54% 46% 50% 50% / 58% 62% 38% 42%;
+  background:
+    radial-gradient(ellipse at 52% 0%, rgba(255, 208, 173, 0.12) 0 16%, rgba(86, 91, 116, 0.28) 48%, rgba(27, 44, 70, 0.52) 78%, rgba(13, 25, 46, 0.28) 100%);
+  box-shadow:
+    0 0.45rem 1.1rem rgba(4, 10, 25, 0.18),
+    0 -0.08rem 0.45rem rgba(255, 232, 198, 0.08) inset;
+  opacity: 0.74;
+}
+
+.lighthouse-body {
+  left: 1.08rem;
+  bottom: 0.38rem;
+  width: 1.16rem;
+  height: 7.85rem;
+  clip-path: polygon(22% 0, 78% 0, 94% 100%, 6% 100%);
+  border-radius: 0.1rem 0.1rem 0.18rem 0.18rem;
+  background:
+    repeating-linear-gradient(180deg, transparent 0 1.22rem, rgba(87, 97, 119, 0.16) 1.22rem 1.32rem, transparent 1.32rem 2.48rem),
+    linear-gradient(90deg, rgba(248, 241, 229, 0.78) 0%, rgba(250, 249, 242, 0.82) 52%, rgba(181, 198, 216, 0.52) 100%);
+  box-shadow:
+    0 0 0 0.035rem rgba(77, 88, 108, 0.24),
+    inset -0.16rem 0 0.36rem rgba(62, 78, 104, 0.12),
+    inset 0.14rem 0 0.2rem rgba(255, 255, 255, 0.5);
+}
+
+.lighthouse-body::before {
+  top: 1.08rem;
+  width: 0.18rem;
+  height: 0.28rem;
+  border-radius: 0.09rem 0.09rem 0.035rem 0.035rem;
+  background: rgba(54, 66, 91, 0.42);
+  box-shadow:
+    0.015rem 1.72rem 0 rgba(54, 66, 91, 0.34),
+    -0.015rem 3.42rem 0 rgba(54, 66, 91, 0.3);
+}
+
+.lighthouse-body::after {
+  bottom: 0.34rem;
+  width: 0.3rem;
+  height: 0.54rem;
+  border-radius: 0.16rem 0.16rem 0.04rem 0.04rem;
+  background: linear-gradient(180deg, rgba(70, 82, 103, 0.5), rgba(31, 43, 64, 0.54));
+}
+
+.lighthouse-top {
+  left: 0.8rem;
+  top: 1.5rem;
+  width: 1.78rem;
+  height: 1.2rem;
+  border-radius: 0.16rem 0.16rem 0.08rem 0.08rem;
+  background:
+    linear-gradient(90deg, rgba(48, 59, 78, 0.58) 0 0.14rem, transparent 0.14rem calc(100% - 0.14rem), rgba(48, 59, 78, 0.58) calc(100% - 0.14rem)),
+    linear-gradient(180deg, rgba(255, 245, 224, 0.74) 0%, rgba(232, 239, 246, 0.72) 54%, rgba(48, 60, 80, 0.66) 55% 100%);
+  box-shadow:
+    0 0 0.9rem rgba(255, 219, 148, 0.22),
+    0 0 0 0.04rem rgba(55, 66, 88, 0.34);
+}
+
+.lighthouse-top::before {
+  left: -0.16rem;
+  right: -0.16rem;
+  top: -0.36rem;
+  height: 0.42rem;
+  border-radius: 0.16rem 0.16rem 0.04rem 0.04rem;
+  background: linear-gradient(180deg, rgba(31, 39, 56, 0.78), rgba(67, 77, 98, 0.62));
+  box-shadow:
+    0 0.07rem 0 rgba(255, 244, 225, 0.14) inset,
+    0 0.18rem 0.4rem rgba(9, 15, 29, 0.16);
+}
+
+.lighthouse-top::after {
+  top: 0.36rem;
+  width: 0.28rem;
+  height: 0.28rem;
+  background: #ffe7a0;
+  border: 0.04rem solid rgba(93, 71, 40, 0.22);
+  box-shadow:
+    0 0 0.5rem 0.13rem rgba(255, 225, 151, 0.72),
+    0 0 1.25rem 0.34rem rgba(255, 180, 105, 0.28);
+}
+
+.lighthouse-beam {
+  right: 1.9rem;
+  top: 1.76rem;
+  width: 34vw;
+  max-width: 13rem;
+  height: 2.1rem;
+  opacity: 0.48;
+  background:
+    linear-gradient(90deg, rgba(255, 241, 205, 0), rgba(255, 221, 156, 0.14), rgba(255, 255, 255, 0.018));
+  clip-path: polygon(0 47%, 100% 25%, 100% 74%, 0 58%);
+  filter: blur(4.4px);
+  mix-blend-mode: screen;
 }
