@@ -244,6 +244,10 @@ document.addEventListener("click", (event) => {
 }, true);
 
 document.addEventListener("click", (event) => {
+  if (event.target.closest("[data-delete-id]")) {
+    return;
+  }
+
   const openButton = event.target.closest("[data-open-id]");
   if (!openButton) {
     return;
