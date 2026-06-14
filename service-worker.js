@@ -5,6 +5,7 @@ const CACHE_ASSETS = [
   "./index.html",
   "./styles-pick1.css",
   "./styles-pick2.css",
+  "./bottle-art.css",
   "./app-audio5.js",
   "./tide-detail.js",
   "./manifest.webmanifest",
