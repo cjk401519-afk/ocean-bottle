@@ -1,4 +1,6 @@
 const STORAGE_KEY = "oceanBottle.v0.bottles";
+const ONBOARDING_KEY = "oceanBottle.v0.onboarded";
+const INVITE_URL = "https://cjk401519-afk.github.io/ocean-bottle/";
 
 const appShell = document.querySelector(".app-shell");
 const screens = {
@@ -22,6 +24,20 @@ const errorMessage = document.getElementById("errorMessage");
 const floatingBottle = document.getElementById("floatingBottle");
 const soundToggle = document.getElementById("soundToggle");
 const toast = document.getElementById("toast");
+const onboarding = document.getElementById("onboarding");
+const onboardingKicker = document.getElementById("onboardingKicker");
+const onboardingTitle = document.getElementById("onboardingTitle");
+const onboardingText = document.getElementById("onboardingText");
+const onboardingDots = document.getElementById("onboardingDots");
+const nextOnboarding = document.getElementById("nextOnboarding");
+const skipOnboarding = document.getElementById("skipOnboarding");
+const openShareSheet = document.getElementById("openShareSheet");
+const shareSheet = document.getElementById("shareSheet");
+const closeShareSheet = document.getElementById("closeShareSheet");
+const copyShareLink = document.getElementById("copyShareLink");
+const nativeShare = document.getElementById("nativeShare");
+const installAppButton = document.getElementById("installAppButton");
+const copyFeedback = document.getElementById("copyFeedback");
 
 const OCEAN_SOUND_SRC = "https://bigsoundbank.com/UPLOAD/mp3/1047.mp3";
 
@@ -34,6 +50,26 @@ let currentFoundBottleId = null;
 let currentFoundBottle = null;
 let foundBottleOpened = false;
 let pickArrivalTimer = null;
+let onboardingIndex = 0;
+let deferredInstallPrompt = null;
+
+const onboardingSteps = [
+  {
+    kicker: "一片安静的海",
+    title: "先把话交给海",
+    text: "这里没有点赞和围观，只有一盏灯、一只瓶子，和慢慢退去的潮水。",
+  },
+  {
+    kicker: "远方也有回声",
+    title: "捡到一点温柔",
+    text: "现在的来信仍是预设内容。等真实互动准备好之前，我们先把安全和氛围打磨好。",
+  },
+  {
+    kicker: "只在此刻的设备",
+    title: "你的潮汐留给你",
+    text: "写下的话只保存在这台设备里。准备好了，再把这片海分享给可信任的人。",
+  },
+];
 
 const dangerPatterns = [
   /自杀/,
@@ -82,6 +118,126 @@ const presetBottles = [
     place: "冬天的海边",
     mood: "疲惫",
     content: "如果没人听见你的沉默，也许这盏灯正在替你守一会儿。",
+  },
+  {
+    id: "moon-window",
+    place: "有月光的窗边",
+    mood: "孤独",
+    content: "孤独不是你做错了什么。有些夜晚很长，但它不会一直这样长。",
+  },
+  {
+    id: "rain-platform",
+    place: "雨后的站台",
+    mood: "迷茫",
+    content: "方向感会暂时消失。先确认自己还在呼吸，再决定下一步往哪里走。",
+  },
+  {
+    id: "old-street",
+    place: "旧街路灯下",
+    mood: "想念",
+    content: "想念可以不被回应，也仍然是真的。你认真过，这件事本身就值得温柔对待。",
+  },
+  {
+    id: "warm-cup",
+    place: "温热的杯子旁",
+    mood: "疲惫",
+    content: "今天先把自己放下来。那些没做完的事，明天也许会轻一点。",
+  },
+  {
+    id: "quiet-dock",
+    place: "安静码头",
+    mood: "委屈",
+    content: "有些委屈不是因为你太脆弱，而是你已经忍了很久。",
+  },
+  {
+    id: "blue-stair",
+    place: "蓝色楼梯间",
+    mood: "迷茫",
+    content: "你不需要向所有人证明自己正在变好。慢慢走，也算是在走。",
+  },
+  {
+    id: "night-market",
+    place: "快收摊的夜市",
+    mood: "平静",
+    content: "如果今天没有特别快乐，也没关系。平安经过一天，也是一种抵达。",
+  },
+  {
+    id: "sea-wall",
+    place: "退潮后的海堤",
+    mood: "释怀",
+    content: "放下不一定是忘记。只是你终于愿意把手松一点，让自己好过一点。",
+  },
+  {
+    id: "white-curtain",
+    place: "白色窗帘后",
+    mood: "孤独",
+    content: "你没有被世界落下。只是这一段路，人声离你远了一点。",
+  },
+  {
+    id: "dawn-bus",
+    place: "清晨公交车",
+    mood: "疲惫",
+    content: "累的时候，别急着要求自己发光。能保持一点温度，就已经很好。",
+  },
+  {
+    id: "salt-wind",
+    place: "有盐味的风里",
+    mood: "想念",
+    content: "有些人像潮声，远了也还会回响。你可以想念，也可以继续生活。",
+  },
+  {
+    id: "empty-library",
+    place: "快闭馆的图书馆",
+    mood: "迷茫",
+    content: "答案不一定突然出现。也许它会先变成一页纸、一条路、一次睡醒后的勇气。",
+  },
+  {
+    id: "soft-blanket",
+    place: "柔软的被角",
+    mood: "委屈",
+    content: "你可以承认自己很难过。承认不是失败，是终于没有再假装没事。",
+  },
+  {
+    id: "orange-cloud",
+    place: "橘色云下面",
+    mood: "平静",
+    content: "愿你今晚不用追赶什么。让风替你翻过这一页。",
+  },
+  {
+    id: "glass-door",
+    place: "便利店玻璃门前",
+    mood: "孤独",
+    content: "有人会懂你很慢才说出口的话。在那之前，先把自己听完。",
+  },
+  {
+    id: "low-tide",
+    place: "很低的潮线",
+    mood: "释怀",
+    content: "不是所有失去都要立刻变成意义。先疼一会儿，再慢慢长出新的生活。",
+  },
+  {
+    id: "warm-lighthouse",
+    place: "灯塔背光处",
+    mood: "疲惫",
+    content: "你也许看不见自己的光，但它并没有熄。只是今晚雾很重。",
+  },
+  {
+    id: "paper-ticket",
+    place: "折起来的车票里",
+    mood: "想念",
+    content: "如果一段关系走到这里，也请记得：你曾经给出的真心没有白费。",
+  },
+  {
+    id: "quiet-corner",
+    place: "房间的安静角落",
+    mood: "委屈",
+    content: "你不必把每次难过都解释得有条有理。心也有下雨的时候。",
+  },
+  {
+    id: "silver-wave",
+    place: "银色浪边",
+    mood: "释怀",
+    content: "有些路回头看才知道很远。能走到现在的你，真的已经很勇敢。",
   },
 ];
 
@@ -158,6 +314,186 @@ function updateSoundToggle(isPlaying) {
   soundToggle.classList.toggle("is-playing", isPlaying);
   soundToggle.setAttribute("aria-pressed", String(isPlaying));
   soundToggle.setAttribute("aria-label", isPlaying ? "暂停海浪白噪音" : "播放海浪白噪音");
+}
+
+function renderOnboardingStep() {
+  if (!onboarding || !onboardingKicker || !onboardingTitle || !onboardingText || !onboardingDots || !nextOnboarding) {
+    return;
+  }
+
+  const step = onboardingSteps[onboardingIndex];
+  onboardingKicker.textContent = step.kicker;
+  onboardingTitle.textContent = step.title;
+  onboardingText.textContent = step.text;
+  onboardingDots.innerHTML = onboardingSteps
+    .map((_, index) => `<span class="${index === onboardingIndex ? "is-active" : ""}"></span>`)
+    .join("");
+  nextOnboarding.textContent = onboardingIndex === onboardingSteps.length - 1 ? "进入海边" : "下一页";
+}
+
+function showOnboarding() {
+  let hasSeenOnboarding = false;
+  try {
+    hasSeenOnboarding = Boolean(localStorage.getItem(ONBOARDING_KEY));
+  } catch (error) {
+    hasSeenOnboarding = false;
+  }
+
+  if (!onboarding || hasSeenOnboarding) {
+    return;
+  }
+
+  onboardingIndex = 0;
+  renderOnboardingStep();
+  onboarding.classList.remove("is-hidden");
+  window.setTimeout(() => nextOnboarding && nextOnboarding.focus({ preventScroll: true }), 80);
+}
+
+function closeOnboarding() {
+  if (!onboarding) {
+    return;
+  }
+
+  try {
+    localStorage.setItem(ONBOARDING_KEY, "1");
+  } catch (error) {
+    // If private browsing blocks storage, closing still matters for this session.
+  }
+  onboarding.classList.add("is-hidden");
+}
+
+function advanceOnboarding() {
+  if (onboardingIndex < onboardingSteps.length - 1) {
+    onboardingIndex += 1;
+    renderOnboardingStep();
+    return;
+  }
+
+  closeOnboarding();
+}
+
+function openSharePanel() {
+  if (!shareSheet) {
+    return;
+  }
+
+  shareSheet.hidden = false;
+  window.setTimeout(() => shareSheet.classList.add("is-visible"), 20);
+  if (nativeShare) {
+    nativeShare.hidden = !navigator.share;
+  }
+  if (copyShareLink) {
+    window.setTimeout(() => copyShareLink.focus({ preventScroll: true }), 80);
+  }
+}
+
+function closeSharePanel() {
+  if (!shareSheet) {
+    return;
+  }
+
+  shareSheet.classList.remove("is-visible");
+  window.setTimeout(() => {
+    shareSheet.hidden = true;
+  }, 180);
+}
+
+function fallbackCopy(text) {
+  const helper = document.createElement("textarea");
+  helper.value = text;
+  helper.setAttribute("readonly", "");
+  helper.style.position = "fixed";
+  helper.style.left = "-9999px";
+  document.body.append(helper);
+  helper.select();
+
+  let copied = false;
+  try {
+    copied = document.execCommand("copy");
+  } catch (error) {
+    copied = false;
+  }
+
+  helper.remove();
+  return copied;
+}
+
+async function copyText(text, successMessage) {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      showToast(successMessage);
+      return;
+    }
+  } catch (error) {
+    // Fall back to the hidden textarea path below.
+  }
+
+  if (fallbackCopy(text)) {
+    showToast(successMessage);
+    return;
+  }
+
+  showToast("这台设备暂时不能自动复制。");
+}
+
+function buildFeedbackTemplate() {
+  return [
+    "海洋漂流瓶内测反馈",
+    "",
+    "1. 我最喜欢的一处：",
+    "",
+    "2. 我觉得不舒服或不清楚的一处：",
+    "",
+    "3. 我希望下一版增加：",
+    "",
+    "4. 我的设备或浏览器：",
+  ].join("\n");
+}
+
+async function shareInvite() {
+  const shareData = {
+    title: "海洋漂流瓶",
+    text: "我在试一个很安静的海边倾诉小网站，想邀请你也来看看。",
+    url: INVITE_URL,
+  };
+
+  if (!navigator.share) {
+    await copyText(INVITE_URL, "邀请链接已经复制。");
+    return;
+  }
+
+  try {
+    await navigator.share(shareData);
+    showToast("这片海已经送出去了。");
+  } catch (error) {
+    if (error && error.name === "AbortError") {
+      return;
+    }
+    await copyText(INVITE_URL, "邀请链接已经复制。");
+  }
+}
+
+async function installApp() {
+  if (deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
+    showToast("如果添加成功，它会出现在你的桌面。");
+    return;
+  }
+
+  showToast("在手机浏览器的分享菜单里，可以添加到主屏幕。");
+}
+
+function registerServiceWorker() {
+  if (!("serviceWorker" in navigator) || location.protocol === "file:") {
+    return;
+  }
+
+  navigator.serviceWorker.register("./service-worker.js?v=invite-4").catch(() => {
+    // The site still works as a normal static page if registration is unavailable.
+  });
 }
 
 async function startOceanSound() {
@@ -667,6 +1003,12 @@ document.addEventListener("click", (event) => {
     return;
   }
 
+  const shareButton = event.target.closest("[data-open-share]");
+  if (shareButton) {
+    openSharePanel();
+    return;
+  }
+
   const openFoundButton = event.target.closest("[data-open-found]");
   if (openFoundButton) {
     openFoundBottle();
@@ -698,6 +1040,37 @@ document.addEventListener("click", (event) => {
 
 messageInput.addEventListener("input", updateTextState);
 sendBottle.addEventListener("click", sendCurrentBottle);
+if (nextOnboarding) {
+  nextOnboarding.addEventListener("click", advanceOnboarding);
+}
+if (skipOnboarding) {
+  skipOnboarding.addEventListener("click", closeOnboarding);
+}
+if (openShareSheet) {
+  openShareSheet.addEventListener("click", openSharePanel);
+}
+if (closeShareSheet) {
+  closeShareSheet.addEventListener("click", closeSharePanel);
+}
+if (shareSheet) {
+  shareSheet.addEventListener("click", (event) => {
+    if (event.target === shareSheet) {
+      closeSharePanel();
+    }
+  });
+}
+if (copyShareLink) {
+  copyShareLink.addEventListener("click", () => copyText(INVITE_URL, "邀请链接已经复制。"));
+}
+if (nativeShare) {
+  nativeShare.addEventListener("click", shareInvite);
+}
+if (installAppButton) {
+  installAppButton.addEventListener("click", installApp);
+}
+if (copyFeedback) {
+  copyFeedback.addEventListener("click", () => copyText(buildFeedbackTemplate(), "反馈文案已经复制。"));
+}
 if (soundToggle) {
   soundToggle.addEventListener("click", toggleOceanSound);
 }
@@ -707,6 +1080,14 @@ if (pickAnother) {
 if (saveFoundLight) {
   saveFoundLight.addEventListener("click", saveFoundLightToTide);
 }
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+});
+window.addEventListener("appinstalled", () => {
+  deferredInstallPrompt = null;
+  showToast("海洋漂流瓶已经留在桌面上了。");
+});
 window.addEventListener("pagehide", () => stopOceanSound({ silent: true }));
 
 clearBottles.addEventListener("click", () => {
@@ -735,3 +1116,5 @@ updateSoundToggle(false);
 renderTide();
 updateTextState();
 switchView("home");
+registerServiceWorker();
+window.setTimeout(showOnboarding, 460);
