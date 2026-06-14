@@ -299,6 +299,165 @@
     linear-gradient(90deg, rgba(255, 241, 205, 0), rgba(255, 221, 156, 0.14), rgba(255, 255, 255, 0.018));
 }
 
+.app-topbar {
+  grid-template-columns: 2.75rem 1fr auto;
+}
+
+.topbar-actions {
+  display: inline-flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.46rem;
+  pointer-events: auto;
+}
+
+.topbar-actions .icon-button {
+  pointer-events: auto;
+}
+
+.share-shortcut span {
+  font-size: 1.05rem;
+  transform: translate(0.02rem, -0.02rem);
+}
+
+.home-share-button {
+  min-height: 2.7rem;
+}
+
+.feedback-link {
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+}
+
+.onboarding,
+.share-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: end center;
+  padding: calc(env(safe-area-inset-top) + 1rem) 1rem calc(env(safe-area-inset-bottom) + 1rem);
+  background:
+    linear-gradient(180deg, rgba(7, 14, 34, 0.16), rgba(6, 12, 30, 0.58)),
+    rgba(5, 11, 28, 0.18);
+  backdrop-filter: blur(10px);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 180ms ease, visibility 180ms ease;
+}
+
+.onboarding.is-hidden,
+.share-sheet:not(.is-visible) {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.share-sheet[hidden] {
+  display: none;
+}
+
+.onboarding-card,
+.share-panel {
+  position: relative;
+  width: min(100%, 28rem);
+  border: 1px solid rgba(255, 236, 207, 0.22);
+  border-radius: 1.35rem 1.35rem 1rem 1rem;
+  color: var(--ink);
+  background:
+    linear-gradient(180deg, rgba(22, 42, 82, 0.86), rgba(10, 24, 55, 0.78));
+  backdrop-filter: blur(22px);
+  box-shadow: 0 -0.35rem 2.4rem rgba(5, 10, 27, 0.3);
+}
+
+.onboarding-card {
+  padding: 1.25rem;
+  transform: translateY(0);
+  transition: transform 220ms ease;
+}
+
+.onboarding.is-hidden .onboarding-card {
+  transform: translateY(1rem);
+}
+
+.onboarding-text {
+  min-height: 4.6rem;
+  margin: 0.82rem 0 1rem;
+  color: rgba(255, 243, 229, 0.82);
+  font-size: 0.96rem;
+  line-height: 1.8;
+}
+
+.onboarding-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  min-height: 1rem;
+}
+
+.onboarding-dots span {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 999px;
+  background: rgba(255, 238, 218, 0.28);
+  transition: width 180ms ease, background 180ms ease;
+}
+
+.onboarding-dots span.is-active {
+  width: 1.18rem;
+  background: rgba(255, 218, 173, 0.82);
+}
+
+.onboarding-actions {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+
+.onboarding-next {
+  min-height: 2.75rem;
+}
+
+.share-panel {
+  padding: 1.2rem;
+  transform: translateY(0.85rem);
+  transition: transform 220ms ease;
+}
+
+.share-sheet.is-visible .share-panel {
+  transform: translateY(0);
+}
+
+.share-header {
+  padding-right: 2.8rem;
+}
+
+.share-actions {
+  display: grid;
+  gap: 0.62rem;
+  margin-top: 0.95rem;
+}
+
+.share-actions .ghost-button,
+.share-actions .quiet-button {
+  min-height: 2.82rem;
+}
+
+.sheet-close {
+  position: absolute;
+  right: 0.9rem;
+  top: 0.9rem;
+  width: 2.2rem;
+  height: 2.2rem;
+}
+
+.sheet-close span {
+  font-size: 1.25rem;
+  transform: translateY(-0.03rem);
+}
+
 .screen-detail {
   justify-content: flex-end;
 }
@@ -503,14 +662,58 @@
 }
 
 .found-bottle-visual {
+  position: relative;
   width: min(12rem, 58vw);
   aspect-ratio: 3 / 2;
-  background: url("./assets/drift-bottle-crystal.png") center / contain no-repeat;
+  border: 1px solid rgba(250, 238, 255, 0.68);
+  border-radius: 3rem 1.25rem 1.25rem 3rem;
+  background:
+    radial-gradient(circle at 34% 32%, rgba(255, 255, 255, 0.9) 0 0.08rem, transparent 0.11rem),
+    radial-gradient(circle at 43% 48%, rgba(255, 242, 186, 0.9) 0 0.08rem, transparent 0.12rem),
+    radial-gradient(circle at 55% 38%, rgba(255, 255, 255, 0.8) 0 0.07rem, transparent 0.11rem),
+    radial-gradient(circle at 64% 54%, rgba(255, 211, 235, 0.95) 0 0.1rem, transparent 0.14rem),
+    linear-gradient(170deg, rgba(255, 255, 255, 0.62), transparent 22%),
+    linear-gradient(180deg, rgba(210, 232, 255, 0.44), rgba(255, 143, 206, 0.35) 54%, rgba(255, 217, 164, 0.42));
+  box-shadow:
+    inset 0 0.25rem 0.55rem rgba(255, 255, 255, 0.54),
+    inset 0 -0.45rem 0.9rem rgba(52, 83, 158, 0.2),
+    0 0.85rem 1.1rem rgba(7, 13, 31, 0.25),
+    0 0 1.2rem rgba(255, 194, 214, 0.18);
   filter:
     drop-shadow(0 0.85rem 1.1rem rgba(7, 13, 31, 0.25))
     drop-shadow(0 0 1.1rem rgba(255, 194, 214, 0.2));
   transform-origin: center;
   animation: echoBottleDrift 5.2s ease-in-out infinite;
+}
+
+.found-bottle-visual::before,
+.found-bottle-visual::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.found-bottle-visual::before {
+  right: -1.28rem;
+  width: 1.75rem;
+  height: 1.3rem;
+  border: 1px solid rgba(249, 239, 255, 0.64);
+  border-left: 0;
+  border-radius: 0.4rem 0.9rem 0.9rem 0.4rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.5), transparent 36%),
+    rgba(202, 223, 255, 0.36);
+}
+
+.found-bottle-visual::after {
+  right: -2rem;
+  width: 0.9rem;
+  height: 1.1rem;
+  border-radius: 0.3rem 0.48rem 0.48rem 0.3rem;
+  background:
+    linear-gradient(120deg, rgba(255, 224, 183, 0.9), rgba(160, 91, 58, 0.92));
+  box-shadow: inset -0.18rem 0 0 rgba(89, 47, 38, 0.22);
 }
 
 .found-bottle-status {
@@ -589,6 +792,23 @@
 
 .save-found-light:not(:disabled) {
   color: rgba(255, 225, 194, 0.86);
+}
+
+@media (max-height: 720px) {
+  .onboarding,
+  .share-sheet {
+    align-items: center;
+  }
+
+  .onboarding-card,
+  .share-panel {
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+  }
+
+  .onboarding-text {
+    min-height: 3.4rem;
+  }
 }
 
 @keyframes echoBottleDrift {
