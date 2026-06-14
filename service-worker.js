@@ -1,4 +1,4 @@
-const CACHE_NAME = "ocean-bottle-v04-invite";
+const CACHE_NAME = "ocean-bottle-v04-bottle-art";
 
 const CACHE_ASSETS = [
   "./",
@@ -9,7 +9,8 @@ const CACHE_ASSETS = [
   "./tide-detail.js",
   "./manifest.webmanifest",
   "./favicon.ico",
-  "./apple-touch-icon.png"
+  "./apple-touch-icon.png",
+  "./assets/drift-bottle-refined.svg"
 ];
 
 self.addEventListener("install", (event) => {
