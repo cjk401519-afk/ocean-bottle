@@ -1,0 +1,20 @@
+{
+  "name": "海洋漂流瓶",
+  "short_name": "漂流瓶",
+  "description": "一片写给海、捡到温柔、回望情绪潮汐的安静海面。",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#10264e",
+  "theme_color": "#162d58",
+  "categories": ["lifestyle", "health", "utilities"],
+  "icons": [
+    {
+      "src": "./apple-touch-icon.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
