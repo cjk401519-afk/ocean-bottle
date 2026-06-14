@@ -4,8 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#162d58" />
+    <meta name="description" content="海洋漂流瓶是一片写给海、捡到温柔、回望情绪潮汐的安静海面。" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="海洋漂流瓶" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>海洋漂流瓶</title>
-    <link rel="stylesheet" href="./styles-pick2.css?v=echo-3" />
+    <link rel="manifest" href="./manifest.webmanifest?v=invite-4" />
+    <link rel="icon" href="./favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="stylesheet" href="./styles-pick2.css?v=invite-4" />
   </head>
   <body>
     <div class="app-shell" data-view="home">
@@ -39,9 +46,14 @@
           <span aria-hidden="true">‹</span>
         </button>
         <p class="topbar-title">海洋漂流瓶</p>
-        <button class="icon-button tide-shortcut" type="button" data-action="tide" aria-label="打开情绪潮汐">
-          <span aria-hidden="true">≋</span>
-        </button>
+        <div class="topbar-actions">
+          <button class="icon-button share-shortcut" type="button" id="openShareSheet" aria-label="分享海洋漂流瓶">
+            <span aria-hidden="true">↗</span>
+          </button>
+          <button class="icon-button tide-shortcut" type="button" data-action="tide" aria-label="打开情绪潮汐">
+            <span aria-hidden="true">≋</span>
+          </button>
+        </div>
       </header>
 
       <button class="ambient-toggle" type="button" id="soundToggle" aria-pressed="false" aria-label="播放海浪白噪音">
@@ -62,6 +74,7 @@
             <button class="primary-button" type="button" data-action="compose">写给海的话</button>
             <button class="ghost-button" type="button" data-action="pick">捡一只漂流瓶</button>
             <button class="ghost-button" type="button" data-action="tide">看看情绪潮汐</button>
+            <button class="quiet-button home-share-button" type="button" data-open-share>邀请朋友试用</button>
             <p class="privacy-note">这一版只保存在你的设备里，不登录，也不会上传。</p>
           </div>
         </section>
@@ -179,10 +192,43 @@
         </section>
       </main>
 
+      <section class="onboarding is-hidden" id="onboarding" role="dialog" aria-modal="true" aria-labelledby="onboardingTitle">
+        <div class="onboarding-card">
+          <p class="eyebrow" id="onboardingKicker">一片安静的海</p>
+          <h2 id="onboardingTitle">先把话交给海</h2>
+          <p class="onboarding-text" id="onboardingText">这里没有点赞和围观，只有一盏灯、一只瓶子，和慢慢退去的潮水。</p>
+          <div class="onboarding-dots" id="onboardingDots" aria-hidden="true"></div>
+          <div class="onboarding-actions">
+            <button class="quiet-button" type="button" id="skipOnboarding">跳过</button>
+            <button class="primary-button onboarding-next" type="button" id="nextOnboarding">下一页</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="share-sheet" id="shareSheet" role="dialog" aria-modal="true" aria-labelledby="shareTitle" hidden>
+        <div class="share-panel">
+          <div class="share-header">
+            <p class="eyebrow">邀请内测</p>
+            <h2 id="shareTitle">把这片海发给一个人</h2>
+            <p class="supporting-copy">也可以把你的感受留给我，下一版会沿着真实反馈继续长出来。</p>
+          </div>
+          <div class="share-actions">
+            <button class="ghost-button" type="button" id="copyShareLink">复制邀请链接</button>
+            <button class="ghost-button" type="button" id="nativeShare">系统分享</button>
+            <button class="ghost-button" type="button" id="installAppButton">添加到桌面</button>
+            <button class="quiet-button" type="button" id="copyFeedback">复制反馈文案</button>
+            <a class="quiet-button feedback-link" href="https://github.com/cjk401519-afk/ocean-bottle/issues/new?title=%E6%B5%B7%E6%B4%8B%E6%BC%82%E6%B5%81%E7%93%B6%E5%86%85%E6%B5%8B%E5%8F%8D%E9%A6%88" target="_blank" rel="noreferrer">打开反馈页</a>
+          </div>
+          <button class="icon-button sheet-close" type="button" id="closeShareSheet" aria-label="关闭分享面板">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+      </section>
+
       <div class="toast" id="toast" role="status" aria-live="polite"></div>
     </div>
 
-    <script src="./app-audio5.js?v=echo-3"></script>
-    <script src="./tide-detail.js?v=echo-3"></script>
+    <script src="./app-audio5.js?v=invite-4"></script>
+    <script src="./tide-detail.js?v=invite-4"></script>
   </body>
 </html>
