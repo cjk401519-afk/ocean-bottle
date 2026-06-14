@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 480" role="img" aria-label="梦幻玻璃漂流瓶">
+  <defs>
+    <linearGradient id="glass" x1="90" y1="155" x2="620" y2="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f8fbff" stop-opacity=".86"/>
+      <stop offset=".18" stop-color="#d7e6ff" stop-opacity=".44"/>
+      <stop offset=".5" stop-color="#ffc2dc" stop-opacity=".38"/>
+      <stop offset=".78" stop-color="#9ed4ff" stop-opacity=".34"/>
+      <stop offset="1" stop-color="#fff5dc" stop-opacity=".7"/>
+    </linearGradient>
+    <linearGradient id="glassEdge" x1="64" y1="207" x2="632" y2="207" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff9f2"/>
+      <stop offset=".42" stop-color="#bfd9ff"/>
+      <stop offset=".76" stop-color="#f6bbff"/>
+      <stop offset="1" stop-color="#fff5e6"/>
+    </linearGradient>
+    <linearGradient id="liquid" x1="138" y1="270" x2="521" y2="270" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff88c9" stop-opacity=".64"/>
+      <stop offset=".48" stop-color="#ffb0dc" stop-opacity=".76"/>
+      <stop offset="1" stop-color="#ffd099" stop-opacity=".6"/>
+    </linearGradient>
+    <linearGradient id="cork" x1="552" y1="161" x2="641" y2="194" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f2b175"/>
+      <stop offset=".48" stop-color="#b46a45"/>
+      <stop offset="1" stop-color="#6b3b2d"/>
+    </linearGradient>
+    <radialGradient id="coreGlow" cx="48%" cy="51%" r="44%">
+      <stop offset="0" stop-color="#fff7d3" stop-opacity=".92"/>
+      <stop offset=".42" stop-color="#ff8fd1" stop-opacity=".34"/>
+      <stop offset="1" stop-color="#8ccfff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softGlow" x="-30%" y="-50%" width="160%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 1  0 .72 0 0 .54  0 0 1 0 .95  0 0 0 .58 0" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="shadow" x="-24%" y="-50%" width="148%" height="200%">
+      <feDropShadow dx="0" dy="18" stdDeviation="14" flood-color="#06112c" flood-opacity=".28"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="#ffb3df" flood-opacity=".24"/>
+    </filter>
+    <clipPath id="bodyClip">
+      <path d="M133 185c25-26 76-35 141-35h174c23 0 42 13 55 30l34 44c8 10 8 24 0 34l-34 44c-13 17-32 30-55 30H274c-65 0-116-9-141-35-27-28-27-84 0-112Z"/>
+    </clipPath>
+  </defs>
+
+  <ellipse cx="358" cy="356" rx="244" ry="42" fill="#071a39" opacity=".17"/>
+  <ellipse cx="358" cy="350" rx="210" ry="24" fill="#ffd5b9" opacity=".12"/>
+
+  <g filter="url(#shadow)" transform="rotate(-17 360 240)">
+    <path d="M506 196h55c12 0 22 10 22 22v44c0 12-10 22-22 22h-55c-16 0-29-13-29-29v-30c0-16 13-29 29-29Z"
+      fill="url(#glass)" stroke="url(#glassEdge)" stroke-width="5"/>
+    <path d="M562 204h64c13 0 24 11 24 24v24c0 13-11 24-24 24h-64Z"
+      fill="url(#cork)" stroke="#ffd6b0" stroke-opacity=".62" stroke-width="4"/>
+    <path d="M570 211c18 3 37 9 58 20" fill="none" stroke="#ffe5c4" stroke-opacity=".32" stroke-width="2"/>
+    <path d="M570 266c18-3 37-8 58-18" fill="none" stroke="#4a221d" stroke-opacity=".25" stroke-width="2"/>
+
+    <path d="M133 185c25-26 76-35 141-35h174c23 0 42 13 55 30l34 44c8 10 8 24 0 34l-34 44c-13 17-32 30-55 30H274c-65 0-116-9-141-35-27-28-27-84 0-112Z"
+      fill="url(#glass)" stroke="url(#glassEdge)" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M118 199c18-27 48-42 81-42 38 0 68 38 68 83s-30 83-68 83c-33 0-63-15-81-42-15-23-15-59 0-82Z"
+      fill="#dff0ff" opacity=".22" stroke="#fff8f2" stroke-opacity=".66" stroke-width="5"/>
+    <ellipse cx="181" cy="240" rx="52" ry="69" fill="none" stroke="#fff8f2" stroke-opacity=".58" stroke-width="4"/>
+    <ellipse cx="184" cy="240" rx="34" ry="50" fill="none" stroke="#93d7ff" stroke-opacity=".3" stroke-width="3"/>
+
+    <g clip-path="url(#bodyClip)">
+      <path d="M123 262c46-25 97-21 153 0 70 27 142 25 223-20 28-15 48-17 66-11v118H123Z" fill="url(#liquid)"/>
+      <path d="M123 261c47-25 99-21 154 0 70 27 142 25 223-20 28-15 48-17 66-11"
+        fill="none" stroke="#fff0c8" stroke-opacity=".72" stroke-width="4"/>
+      <ellipse cx="353" cy="242" rx="210" ry="88" fill="url(#coreGlow)" filter="url(#softGlow)" opacity=".68"/>
+      <path d="M180 184c56-22 218-22 301 0" fill="none" stroke="#fff" stroke-opacity=".52" stroke-width="8" stroke-linecap="round"/>
+      <path d="M185 202c72-21 199-19 278 0" fill="none" stroke="#9de7ff" stroke-opacity=".28" stroke-width="5" stroke-linecap="round"/>
+
+      <g fill="#fffdf1">
+        <circle cx="246" cy="227" r="4.5"/>
+        <circle cx="308" cy="219" r="3.2"/>
+        <circle cx="371" cy="253" r="3.6"/>
+        <circle cx="433" cy="220" r="2.8"/>
+        <circle cx="470" cy="279" r="3.4"/>
+        <circle cx="272" cy="286" r="3.8"/>
+        <circle cx="342" cy="298" r="2.7"/>
+      </g>
+      <g stroke="#fffdf1" stroke-linecap="round" opacity=".86">
+        <path d="M246 218v18M237 227h18" stroke-width="2"/>
+        <path d="M371 244v18M362 253h18" stroke-width="1.8"/>
+        <path d="M470 270v18M461 279h18" stroke-width="1.7"/>
+        <path d="M308 212v14M301 219h14" stroke-width="1.5"/>
+      </g>
+      <g fill="#ffd0ef" opacity=".78">
+        <circle cx="225" cy="268" r="3"/>
+        <circle cx="396" cy="285" r="3.3"/>
+        <circle cx="510" cy="252" r="2.8"/>
+      </g>
+    </g>
+
+    <path d="M138 190c31-21 78-27 136-27h165c22 0 43 13 57 31"
+      fill="none" stroke="#fff" stroke-opacity=".64" stroke-width="5" stroke-linecap="round"/>
+    <path d="M506 210h53" fill="none" stroke="#fff" stroke-opacity=".52" stroke-width="4" stroke-linecap="round"/>
+    <path d="M516 269h43" fill="none" stroke="#7bbdff" stroke-opacity=".3" stroke-width="4" stroke-linecap="round"/>
+  </g>
+</svg>
