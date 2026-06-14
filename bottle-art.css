@@ -1,0 +1,94 @@
+.found-bottle {
+  min-height: 14.4rem;
+  padding: 1.05rem 1rem 1.18rem;
+  background:
+    radial-gradient(circle at 18% 8%, rgba(255, 236, 202, 0.22), transparent 8rem),
+    radial-gradient(circle at 76% 22%, rgba(180, 214, 255, 0.13), transparent 8.5rem),
+    radial-gradient(ellipse at 50% 106%, rgba(255, 230, 196, 0.18), transparent 8rem),
+    linear-gradient(180deg, rgba(20, 38, 76, 0.72), rgba(10, 24, 55, 0.58));
+  overflow: hidden;
+}
+
+.found-bottle-shell {
+  gap: 0.38rem;
+  min-height: 12.35rem;
+}
+
+.found-bottle-wave {
+  left: 4%;
+  right: 4%;
+  bottom: 1.45rem;
+  height: 4.1rem;
+  background:
+    radial-gradient(ellipse at 50% 42%, rgba(255, 239, 216, 0.28), transparent 58%),
+    radial-gradient(ellipse at 62% 56%, rgba(255, 150, 200, 0.14), transparent 56%),
+    repeating-linear-gradient(178deg, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px 1.04rem);
+  filter: blur(0.42px);
+  opacity: 0.74;
+}
+
+.found-bottle-visual {
+  z-index: 1;
+  width: min(15rem, 72vw);
+  border: 0;
+  border-radius: 0;
+  background: url("./assets/drift-bottle-refined.svg") center / contain no-repeat;
+  box-shadow: none;
+  filter:
+    drop-shadow(0 1.15rem 0.95rem rgba(5, 12, 31, 0.28))
+    drop-shadow(0 0 1.05rem rgba(255, 181, 219, 0.28))
+    drop-shadow(0 0 1.5rem rgba(170, 210, 255, 0.16));
+}
+
+.found-bottle-visual::before,
+.found-bottle-visual::after {
+  pointer-events: none;
+  top: auto;
+  transform: none;
+}
+
+.found-bottle-visual::before {
+  left: 10%;
+  right: 12%;
+  top: 18%;
+  width: auto;
+  height: 58%;
+  border: 0;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 22% 30%, rgba(255, 255, 255, 0.9) 0 0.06rem, transparent 0.11rem),
+    radial-gradient(circle at 35% 58%, rgba(255, 238, 188, 0.9) 0 0.08rem, transparent 0.13rem),
+    radial-gradient(circle at 48% 38%, rgba(255, 198, 231, 0.92) 0 0.07rem, transparent 0.12rem),
+    radial-gradient(circle at 60% 52%, rgba(255, 255, 255, 0.82) 0 0.055rem, transparent 0.11rem),
+    radial-gradient(circle at 75% 36%, rgba(190, 224, 255, 0.78) 0 0.06rem, transparent 0.12rem);
+  opacity: 0.72;
+  transform: rotate(-15deg);
+}
+
+.found-bottle-visual::after {
+  left: 7%;
+  right: 8%;
+  bottom: -0.24rem;
+  width: auto;
+  height: 1.4rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(255, 223, 188, 0.18), transparent 68%),
+    radial-gradient(ellipse at 52% 60%, rgba(140, 188, 255, 0.1), transparent 72%);
+  box-shadow: none;
+  filter: blur(0.28rem);
+  transform: rotate(-4deg);
+}
+
+.found-bottle-status {
+  margin-top: -0.05rem;
+}
+
+.floating-bottle {
+  width: clamp(7.6rem, 40vw, 10.4rem);
+  background-image: url("./assets/drift-bottle-refined.svg");
+  filter:
+    drop-shadow(0 0.8rem 0.85rem rgba(6, 13, 32, 0.26))
+    drop-shadow(0 0 1.15rem rgba(255, 173, 219, 0.24))
+    drop-shadow(0 0 1.45rem rgba(161, 211, 255, 0.12));
+}
