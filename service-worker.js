@@ -7,6 +7,7 @@ const CACHE_ASSETS = [
   "./styles-pick2.css",
   "./bottle-art.css",
   "./v05-echo.css",
+  "./v05-echo-bridge.js",
   "./app-audio5.js",
   "./tide-detail.js",
   "./manifest.webmanifest",
