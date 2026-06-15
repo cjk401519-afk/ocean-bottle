@@ -1,0 +1,291 @@
+.ocean-scene {
+  background:
+    radial-gradient(circle at 18% 61%, rgba(255, 221, 143, 0.88), transparent 8.5rem),
+    radial-gradient(circle at 75% 18%, rgba(101, 176, 255, 0.28), transparent 13rem),
+    radial-gradient(circle at 38% 22%, rgba(243, 158, 228, 0.22), transparent 12rem),
+    linear-gradient(180deg, #122858 0%, #244681 25%, #80629b 42%, #f3a36f 56%, #405f93 69%, #102856 100%);
+}
+
+.ocean-scene::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 8% 11%, rgba(255, 255, 255, 0.92) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 18% 18%, rgba(255, 226, 191, 0.8) 0 1px, transparent 1.9px),
+    radial-gradient(circle at 31% 9%, rgba(255, 255, 255, 0.86) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 43% 20%, rgba(203, 232, 255, 0.9) 0 1px, transparent 1.9px),
+    radial-gradient(circle at 61% 13%, rgba(255, 255, 255, 0.76) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 82% 8%, rgba(255, 218, 244, 0.82) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 91% 22%, rgba(255, 255, 255, 0.74) 0 1px, transparent 1.8px),
+    linear-gradient(116deg, transparent 0 36%, rgba(177, 234, 255, 0.28) 37%, rgba(255, 207, 236, 0.2) 43%, transparent 54%),
+    linear-gradient(122deg, transparent 0 68%, rgba(167, 215, 255, 0.54) 69%, transparent 74%);
+  opacity: 0.84;
+  mix-blend-mode: screen;
+  animation: starBreath 8s ease-in-out infinite;
+}
+
+.ocean-scene::after {
+  background:
+    radial-gradient(ellipse at 22% 49%, rgba(255, 161, 129, 0.3), transparent 12rem),
+    radial-gradient(ellipse at 78% 43%, rgba(255, 185, 210, 0.28), transparent 13rem),
+    radial-gradient(ellipse at 51% 15%, rgba(163, 221, 255, 0.16), transparent 15rem),
+    linear-gradient(180deg, rgba(6, 14, 36, 0.08) 0%, transparent 42%, rgba(6, 12, 31, 0.42) 100%);
+}
+
+.sky-glow {
+  left: -18%;
+  right: -18%;
+  top: 9%;
+  height: 43%;
+  background:
+    radial-gradient(ellipse at 28% 76%, rgba(255, 218, 159, 0.64), transparent 38%),
+    linear-gradient(112deg, transparent 0 18%, rgba(176, 230, 255, 0.14) 29%, rgba(255, 181, 228, 0.2) 45%, rgba(119, 187, 255, 0.1) 58%, transparent 74%);
+  filter: blur(10px);
+}
+
+.sunset {
+  left: 18%;
+  top: 60%;
+  width: min(21vw, 6.4rem);
+  background:
+    radial-gradient(circle, #fff0bd 0 26%, #ffc06e 49%, rgba(255, 156, 110, 0.18) 67%, transparent 76%);
+  opacity: 0.88;
+}
+
+.haze {
+  background: rgba(255, 199, 177, 0.18);
+  filter: blur(23px);
+}
+
+.distant-coast {
+  top: 53%;
+  opacity: 0.58;
+  filter: blur(12px);
+}
+
+.sea {
+  height: 45%;
+  background:
+    radial-gradient(ellipse at 18% 0%, rgba(255, 210, 140, 0.42), transparent 34%),
+    linear-gradient(180deg, rgba(94, 127, 171, 0.48), rgba(31, 70, 119, 0.9) 35%, #0a1b42 100%);
+}
+
+.sea::before {
+  background:
+    radial-gradient(ellipse at 18% 9%, rgba(255, 224, 159, 0.58), transparent 18%),
+    repeating-linear-gradient(173deg, rgba(255, 225, 196, 0.19) 0 1px, transparent 1px 2rem),
+    repeating-linear-gradient(2deg, transparent 0 1.1rem, rgba(187, 223, 255, 0.055) 1.1rem 1.24rem);
+  opacity: 0.66;
+}
+
+.sea::after {
+  content: "";
+  position: absolute;
+  left: -12%;
+  bottom: 0;
+  width: 54%;
+  height: 100%;
+  background:
+    linear-gradient(96deg, transparent 0 23%, rgba(255, 209, 125, 0.36) 32%, rgba(255, 167, 126, 0.17) 47%, transparent 65%),
+    repeating-linear-gradient(175deg, rgba(255, 224, 162, 0.2) 0 1px, transparent 1px 1.2rem);
+  filter: blur(0.4px);
+  opacity: 0.7;
+  animation: reflectionDrift 9s ease-in-out infinite;
+}
+
+.sparkles {
+  left: 4%;
+  right: 4%;
+  top: -2%;
+  height: 18rem;
+  background:
+    radial-gradient(circle at 14% 20%, rgba(255, 255, 255, 0.95) 0 1px, transparent 2px),
+    radial-gradient(circle at 27% 38%, rgba(255, 217, 191, 0.74) 0 1px, transparent 2px),
+    radial-gradient(circle at 45% 24%, rgba(203, 232, 255, 0.82) 0 1px, transparent 2px),
+    radial-gradient(circle at 64% 44%, rgba(255, 225, 247, 0.75) 0 1px, transparent 2px),
+    radial-gradient(circle at 88% 30%, rgba(255, 255, 255, 0.8) 0 1px, transparent 2px);
+}
+
+.lighthouse {
+  filter:
+    drop-shadow(0 1.15rem 1.7rem rgba(5, 12, 28, 0.22))
+    drop-shadow(0 0 1.1rem rgba(255, 227, 167, 0.18));
+}
+
+.lighthouse-top::after {
+  box-shadow:
+    0 0 0.52rem 0.15rem rgba(255, 225, 151, 0.78),
+    0 0 1.55rem 0.4rem rgba(255, 181, 106, 0.33);
+}
+
+.app-shell.is-echoing .lighthouse-top::after {
+  animation: echoLampPulse 2.8s ease-in-out;
+}
+
+.app-shell.is-echoing .lighthouse-beam {
+  opacity: 0.9;
+  animation: echoBeamSweep 3.2s ease-in-out;
+}
+
+.home-copy h1 {
+  text-shadow:
+    0 0.22rem 1rem rgba(14, 22, 56, 0.35),
+    0 0 1.6rem rgba(255, 207, 180, 0.2);
+}
+
+.home-line,
+.home-note,
+.supporting-copy {
+  text-shadow: 0 0.15rem 0.8rem rgba(9, 17, 43, 0.25);
+}
+
+.compose-panel,
+detail-panel,
+.onboarding-card,
+.share-panel,
+.found-bottle,
+.detail-bottle {
+  border-color: rgba(255, 235, 211, 0.24);
+  background-blend-mode: screen, normal;
+  box-shadow:
+    0 1rem 2.8rem rgba(5, 12, 33, 0.22),
+    0 0 1.8rem rgba(255, 190, 214, 0.07);
+}
+
+.primary-button {
+  box-shadow:
+    0 0.9rem 1.7rem rgba(255, 166, 110, 0.17),
+    0 0 1.2rem rgba(255, 225, 170, 0.08);
+}
+
+.lighthouse-echo {
+  position: fixed;
+  inset: 0;
+  z-index: 28;
+  display: grid;
+  place-items: end center;
+  padding: calc(env(safe-area-inset-top) + 1rem) 1rem calc(env(safe-area-inset-bottom) + 1.2rem);
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255, 227, 163, 0.2), transparent 15rem),
+    linear-gradient(180deg, rgba(8, 16, 38, 0.08), rgba(7, 13, 31, 0.48));
+  backdrop-filter: blur(6px);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 220ms ease, visibility 220ms ease;
+}
+
+.lighthouse-echo.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.echo-panel {
+  position: relative;
+  width: min(100%, 27rem);
+  padding: 1.08rem 1.1rem 1rem;
+  border: 1px solid rgba(255, 236, 207, 0.26);
+  border-radius: 1.35rem 1.35rem 1rem 1rem;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(255, 232, 188, 0.18), transparent 8rem),
+    linear-gradient(180deg, rgba(24, 47, 88, 0.86), rgba(9, 24, 54, 0.78));
+  color: var(--ink);
+  box-shadow:
+    0 -0.3rem 2.6rem rgba(5, 10, 27, 0.32),
+    0 0 2.6rem rgba(255, 214, 171, 0.12);
+  transform: translateY(0);
+  animation: echoPanelArrive 420ms ease both;
+}
+
+.echo-panel::before {
+  content: "";
+  position: absolute;
+  left: 1.1rem;
+  right: 1.1rem;
+  top: -0.55rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 236, 207, 0.7), transparent);
+  box-shadow: 0 0 1.2rem rgba(255, 225, 176, 0.46);
+}
+
+.echo-panel h2 {
+  margin: 0.2rem 0 0;
+  font-size: 1.32rem;
+  font-weight: 650;
+  letter-spacing: 0;
+}
+
+.echo-line {
+  min-height: 4.4rem;
+  margin: 0.78rem 0 0.95rem;
+  color: rgba(255, 246, 234, 0.9);
+  font-size: 1.02rem;
+  line-height: 1.82;
+}
+
+.echo-continue {
+  width: 100%;
+  min-height: 2.65rem;
+}
+
+@keyframes starBreath {
+  0%,
+  100% {
+    opacity: 0.72;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.96;
+    transform: translateY(-0.25rem);
+  }
+}
+
+@keyframes reflectionDrift {
+  0%,
+  100% {
+    transform: translateX(0) skewX(-4deg);
+    opacity: 0.58;
+  }
+  50% {
+    transform: translateX(0.75rem) skewX(-2deg);
+    opacity: 0.84;
+  }
+}
+
+@keyframes echoLampPulse {
+  0%,
+  100% {
+    filter:
+      drop-shadow(0 1.15rem 1.7rem rgba(5, 12, 28, 0.22))
+      drop-shadow(0 0 1.1rem rgba(255, 227, 167, 0.18));
+  }
+  45% {
+    filter:
+      drop-shadow(0 1.15rem 1.7rem rgba(5, 12, 28, 0.22))
+      drop-shadow(0 0 2.1rem rgba(255, 229, 170, 0.55));
+  }
+}
+
+@keyframes echoBeamSweep {
+  0% {
+    transform: rotate(-12deg) scaleX(0.82);
+  }
+  45% {
+    transform: rotate(-5deg) scaleX(1.16);
+  }
+  100% {
+    transform: rotate(-7deg) scaleX(1);
+  }
+}
+
+@keyframes echoPanelArrive {
+  0% {
+    opacity: 0;
+    transform: translateY(0.8rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
