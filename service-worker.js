@@ -1,4 +1,4 @@
-const CACHE_NAME = "ocean-bottle-v06-hero-art";
+const CACHE_NAME = "ocean-bottle-v07-dynamic-scene";
 
 const CACHE_ASSETS = [
   "./",
@@ -8,6 +8,7 @@ const CACHE_ASSETS = [
   "./bottle-art.css",
   "./v05-echo.css",
   "./v06-hero-art.css",
+  "./v07-dynamic-scene.css",
   "./v05-echo-bridge.js",
   "./app-audio5.js",
   "./tide-detail.js",
