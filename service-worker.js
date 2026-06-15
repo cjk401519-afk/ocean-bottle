@@ -1,4 +1,4 @@
-const CACHE_NAME = "ocean-bottle-v05-echo";
+const CACHE_NAME = "ocean-bottle-v05-echo-bridge";
 
 const CACHE_ASSETS = [
   "./",
