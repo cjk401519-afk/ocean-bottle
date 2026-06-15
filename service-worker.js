@@ -1,4 +1,4 @@
-const CACHE_NAME = "ocean-bottle-v05-echo-bridge";
+const CACHE_NAME = "ocean-bottle-v06-hero-art";
 
 const CACHE_ASSETS = [
   "./",
@@ -7,13 +7,15 @@ const CACHE_ASSETS = [
   "./styles-pick2.css",
   "./bottle-art.css",
   "./v05-echo.css",
+  "./v06-hero-art.css",
   "./v05-echo-bridge.js",
   "./app-audio5.js",
   "./tide-detail.js",
   "./manifest.webmanifest",
   "./favicon.ico",
   "./apple-touch-icon.png",
-  "./assets/drift-bottle-refined.svg"
+  "./assets/drift-bottle-refined.svg",
+  "./assets/hero-ocean-icon-scene.jpg"
 ];
 
 self.addEventListener("install", (event) => {
