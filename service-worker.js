@@ -1,4 +1,4 @@
-const CACHE_NAME = "ocean-bottle-v08-immersive-hero-2";
+const CACHE_NAME = "ocean-bottle-v08-immersive-hero-3";
 
 const CACHE_ASSETS = [
   "./",

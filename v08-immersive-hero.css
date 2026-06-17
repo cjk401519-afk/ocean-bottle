@@ -2,7 +2,7 @@
   background:
     radial-gradient(ellipse at 50% 104%, rgba(3, 9, 26, 0.82), transparent 44%),
     linear-gradient(180deg, rgba(2, 8, 24, 0.1) 0%, transparent 26%, rgba(4, 10, 26, 0.28) 74%, rgba(2, 6, 18, 0.72) 100%),
-    url("./assets/hero-ocean-icon-scene.webp"),
+    url("./assets/hero-ocean-icon-scene.webp?v=hero-720-q8"),
     radial-gradient(circle at 24% 72%, rgba(255, 177, 96, 0.36), transparent 18rem),
     linear-gradient(180deg, #07183d 0%, #183b76 48%, #f19a72 64%, #07152f 100%);
   background-position:
