@@ -1,4 +1,4 @@
-const CACHE_NAME = "ocean-bottle-v07-dynamic-scene";
+const CACHE_NAME = "ocean-bottle-v08-immersive-hero-2";
 
 const CACHE_ASSETS = [
   "./",
@@ -9,6 +9,7 @@ const CACHE_ASSETS = [
   "./v05-echo.css",
   "./v06-hero-art.css",
   "./v07-dynamic-scene.css",
+  "./v08-immersive-hero.css",
   "./v05-echo-bridge.js",
   "./app-audio5.js",
   "./tide-detail.js",
@@ -16,6 +17,7 @@ const CACHE_ASSETS = [
   "./favicon.ico",
   "./apple-touch-icon.png",
   "./assets/drift-bottle-refined.svg",
+  "./assets/hero-ocean-icon-scene.webp",
   "./assets/hero-ocean-icon-scene.jpg"
 ];
 
