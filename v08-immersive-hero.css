@@ -1,0 +1,410 @@
+.ocean-scene {
+  background:
+    radial-gradient(ellipse at 50% 104%, rgba(3, 9, 26, 0.82), transparent 44%),
+    linear-gradient(180deg, rgba(2, 8, 24, 0.1) 0%, transparent 26%, rgba(4, 10, 26, 0.28) 74%, rgba(2, 6, 18, 0.72) 100%),
+    url("./assets/hero-ocean-icon-scene.png"),
+    radial-gradient(circle at 24% 72%, rgba(255, 177, 96, 0.36), transparent 18rem),
+    linear-gradient(180deg, #07183d 0%, #183b76 48%, #f19a72 64%, #07152f 100%);
+  background-position:
+    center bottom,
+    center,
+    center center,
+    center,
+    center;
+  background-repeat: no-repeat;
+  background-size:
+    100% 100%,
+    100% 100%,
+    cover,
+    100% 100%,
+    100% 100%;
+  transform: none;
+}
+
+.ocean-scene > * {
+  display: none;
+}
+
+.ocean-scene .sea,
+.ocean-scene .sea .wave,
+.ocean-scene .sea .sparkles {
+  display: block;
+}
+
+.ocean-scene::before {
+  content: "";
+  position: absolute;
+  inset: -4%;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 12% 14%, rgba(255, 255, 255, 0.88) 0 1px, transparent 2px),
+    radial-gradient(circle at 26% 8%, rgba(255, 225, 244, 0.72) 0 1px, transparent 2px),
+    radial-gradient(circle at 44% 18%, rgba(180, 229, 255, 0.82) 0 1px, transparent 2px),
+    radial-gradient(circle at 69% 11%, rgba(255, 255, 255, 0.72) 0 1px, transparent 2px),
+    radial-gradient(circle at 86% 24%, rgba(255, 219, 190, 0.72) 0 1px, transparent 2px),
+    linear-gradient(116deg, transparent 0 45%, rgba(235, 246, 255, 0.42) 49%, rgba(255, 227, 188, 0.22) 54%, transparent 65%),
+    linear-gradient(124deg, transparent 0 76%, rgba(151, 207, 255, 0.42) 79%, transparent 84%);
+  mix-blend-mode: screen;
+  opacity: 0.76;
+  animation: v08SkyBreathe 14s ease-in-out infinite;
+}
+
+.ocean-scene::after {
+  content: "";
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  bottom: -2%;
+  z-index: 2;
+  height: 47%;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(7, 20, 50, 0.06) 20%, rgba(7, 17, 41, 0.34) 100%),
+    radial-gradient(ellipse at 20% 24%, rgba(255, 203, 106, 0.5), transparent 19%),
+    radial-gradient(ellipse at 70% 72%, rgba(17, 39, 87, 0.52), transparent 40%),
+    linear-gradient(180deg, transparent 0%, rgba(5, 14, 39, 0.08) 22%, rgba(4, 11, 31, 0.42) 82%, rgba(2, 7, 21, 0.84) 100%);
+  opacity: 0.92;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 10%, rgba(0, 0, 0, 0.18) 25%, #000 48%, #000 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, transparent 10%, rgba(0, 0, 0, 0.18) 25%, #000 48%, #000 100%);
+  animation: v08SeaGlow 9s ease-in-out infinite;
+}
+
+.sea {
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  bottom: -1%;
+  z-index: 3;
+  height: 39%;
+  overflow: hidden;
+  pointer-events: none;
+  background: transparent;
+  mix-blend-mode: screen;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 12%, rgba(0, 0, 0, 0.2) 30%, #000 56%, #000 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, transparent 12%, rgba(0, 0, 0, 0.2) 30%, #000 56%, #000 100%);
+}
+
+.sea::before {
+  content: "";
+  position: absolute;
+  inset: -8% -10%;
+  background:
+    radial-gradient(ellipse at 19% 14%, rgba(255, 219, 133, 0.56), transparent 18%),
+    radial-gradient(ellipse at 73% 12%, rgba(132, 190, 255, 0.2), transparent 22%),
+    repeating-linear-gradient(174deg, rgba(255, 239, 204, 0.23) 0 1px, transparent 1px 1.38rem),
+    repeating-linear-gradient(3deg, transparent 0 1.08rem, rgba(192, 229, 255, 0.12) 1.08rem 1.18rem);
+  background-size:
+    100% 100%,
+    100% 100%,
+    135% 135%,
+    120% 120%;
+  opacity: 0.7;
+  transform: translate3d(0, 0, 0);
+  animation: v08WaveDrift 6.8s linear infinite;
+}
+
+.sea::after {
+  content: "";
+  position: absolute;
+  left: -16%;
+  bottom: -8%;
+  width: 72%;
+  height: 104%;
+  background:
+    linear-gradient(98deg, transparent 0 19%, rgba(255, 224, 141, 0.5) 31%, rgba(255, 149, 112, 0.2) 48%, transparent 68%),
+    repeating-linear-gradient(176deg, rgba(255, 222, 143, 0.22) 0 1px, transparent 1px 0.92rem);
+  opacity: 0.78;
+  transform: skewX(-8deg);
+  animation: v08SunTrack 7.8s ease-in-out infinite;
+}
+
+.wave {
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  height: 5.2rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(255, 247, 225, 0.44) 0 8%, transparent 44%),
+    radial-gradient(ellipse at 22% 100%, rgba(255, 199, 129, 0.24) 0 6%, transparent 37%);
+  opacity: 0.55;
+  transform: translate3d(0, 0, 0);
+}
+
+.wave-one {
+  bottom: 61%;
+  animation: v08WaveLine 9s ease-in-out infinite;
+}
+
+.wave-two {
+  bottom: 43%;
+  opacity: 0.46;
+  animation: v08WaveLine 11s ease-in-out infinite reverse;
+}
+
+.wave-three {
+  bottom: 23%;
+  opacity: 0.38;
+  animation: v08WaveLine 13s ease-in-out infinite;
+}
+
+.sparkles {
+  position: absolute;
+  inset: 4% 6% auto 6%;
+  height: 82%;
+  background:
+    radial-gradient(circle at 13% 16%, rgba(255, 252, 226, 0.9) 0 1px, transparent 2px),
+    radial-gradient(circle at 28% 31%, rgba(255, 203, 137, 0.75) 0 1px, transparent 2px),
+    radial-gradient(circle at 46% 22%, rgba(206, 235, 255, 0.8) 0 1px, transparent 2px),
+    radial-gradient(circle at 61% 45%, rgba(255, 239, 212, 0.7) 0 1px, transparent 2px),
+    radial-gradient(circle at 82% 34%, rgba(255, 255, 255, 0.75) 0 1px, transparent 2px);
+  opacity: 0.62;
+  animation: v08SparkleTide 5.6s ease-in-out infinite;
+}
+
+.lighthouse,
+.fishing-boat,
+.stranded-ship,
+.sky-glow,
+.sunset,
+.haze,
+.distant-coast,
+.coast-light {
+  display: none !important;
+}
+
+.app-shell[data-view="home"] .floating-bottle:not(.is-sent) {
+  display: none;
+}
+
+.home-copy {
+  position: relative;
+  z-index: 8;
+  max-width: min(30rem, 88vw);
+  padding-top: clamp(1.1rem, 4vh, 2.8rem);
+}
+
+.home-copy .eyebrow {
+  color: rgba(255, 226, 190, 0.92);
+  text-shadow: 0 0.12rem 0.8rem rgba(2, 7, 21, 0.66);
+}
+
+.home-copy h1 {
+  max-width: 9em;
+  color: #fff8ed;
+  font-size: clamp(3.12rem, 12vw, 5.1rem);
+  text-shadow:
+    0 0.16rem 0.62rem rgba(3, 8, 22, 0.62),
+    0 0 1.8rem rgba(255, 181, 125, 0.32);
+}
+
+.home-line,
+.home-note {
+  max-width: 28rem;
+  color: rgba(255, 246, 232, 0.94);
+  text-shadow:
+    0 0.12rem 0.58rem rgba(2, 7, 21, 0.74),
+    0 0 1.4rem rgba(255, 182, 136, 0.16);
+}
+
+.home-note {
+  color: rgba(255, 239, 220, 0.78);
+}
+
+.home-actions {
+  position: relative;
+  z-index: 9;
+  max-width: min(30rem, 88vw);
+  padding: 0.9rem 0.08rem 0.35rem;
+  border-radius: 1.8rem 1.8rem 1.2rem 1.2rem;
+  background:
+    linear-gradient(180deg, rgba(8, 17, 43, 0), rgba(8, 17, 43, 0.2) 28%, rgba(6, 13, 35, 0.38) 100%);
+}
+
+.primary-button {
+  background: linear-gradient(135deg, #ffe6b0, #ffc08b 48%, #f5a0bd);
+  color: #081a3b;
+  box-shadow:
+    0 0.9rem 1.8rem rgba(255, 143, 103, 0.2),
+    0 0 1.8rem rgba(255, 214, 151, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.74);
+}
+
+.ghost-button,
+.quiet-button,
+.icon-button,
+.ambient-toggle,
+.compose-panel,
+.detail-panel,
+.onboarding-card,
+.share-panel,
+.found-bottle,
+.detail-bottle {
+  border-color: rgba(255, 234, 210, 0.22);
+  background-color: rgba(8, 20, 52, 0.3);
+  backdrop-filter: blur(18px) saturate(1.08);
+}
+
+.compose-panel,
+.detail-panel,
+.onboarding-card,
+.share-panel,
+.found-bottle,
+.detail-bottle {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(255, 222, 178, 0.13), transparent 9rem),
+    linear-gradient(180deg, rgba(18, 39, 82, 0.72), rgba(7, 19, 49, 0.58));
+}
+
+.app-shell.is-echoing .ocean-scene::before {
+  animation: v08EchoLight 3.2s ease-in-out;
+}
+
+.app-shell.is-echoing .sea::before,
+.app-shell.is-echoing .sea::after {
+  animation-duration: 3.2s;
+}
+
+@media (orientation: portrait) {
+  .ocean-scene {
+    background-size:
+      100% 100%,
+      100% 100%,
+      auto 100%,
+      100% 100%,
+      100% 100%;
+    background-position:
+      center bottom,
+      center,
+      center top,
+      center,
+      center;
+  }
+}
+
+@media (min-width: 720px) {
+  .ocean-scene {
+    background-size:
+      100% 100%,
+      100% 100%,
+      min(100vw, 86rem) auto,
+      100% 100%,
+      100% 100%;
+    background-position:
+      center bottom,
+      center,
+      center 43%,
+      center,
+      center;
+  }
+
+  .home-copy,
+  .home-actions {
+    max-width: 32rem;
+  }
+
+  .home-copy h1 {
+    font-size: clamp(4rem, 4.8vw, 5.15rem);
+    max-width: 32rem;
+  }
+}
+
+@media (max-height: 720px) {
+  .home-copy {
+    padding-top: 0.45rem;
+  }
+
+  .home-actions {
+    padding-top: 0.4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ocean-scene::before,
+  .ocean-scene::after,
+  .sea::before,
+  .sea::after,
+  .wave,
+  .sparkles {
+    animation: none !important;
+  }
+}
+
+@keyframes v08SkyBreathe {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    opacity: 0.88;
+    transform: translate3d(0.8rem, -0.5rem, 0);
+  }
+}
+
+@keyframes v08SeaGlow {
+  0%,
+  100% {
+    opacity: 0.82;
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    opacity: 0.98;
+    transform: translate3d(0, -0.32rem, 0);
+  }
+}
+
+@keyframes v08WaveDrift {
+  0% {
+    background-position: 0 0, 0 0, 0 0, 0 0;
+  }
+  100% {
+    background-position: 0 0, 0 0, 5.6rem 1.6rem, -3.2rem 1.1rem;
+  }
+}
+
+@keyframes v08SunTrack {
+  0%,
+  100% {
+    opacity: 0.56;
+    transform: translate3d(0, 0, 0) skewX(-8deg);
+  }
+  50% {
+    opacity: 0.86;
+    transform: translate3d(2rem, -0.42rem, 0) skewX(-11deg);
+  }
+}
+
+@keyframes v08WaveLine {
+  0%,
+  100% {
+    transform: translate3d(-1.4rem, 0, 0) scaleX(1);
+  }
+  50% {
+    transform: translate3d(1.6rem, -0.28rem, 0) scaleX(1.03);
+  }
+}
+
+@keyframes v08SparkleTide {
+  0%,
+  100% {
+    opacity: 0.46;
+    transform: translate3d(0, 0, 0);
+  }
+  48% {
+    opacity: 0.82;
+    transform: translate3d(0.8rem, -0.45rem, 0);
+  }
+}
+
+@keyframes v08EchoLight {
+  0%,
+  100% {
+    opacity: 0.72;
+  }
+  45% {
+    opacity: 1;
+    filter: brightness(1.2) saturate(1.12);
+  }
+}
